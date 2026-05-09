@@ -7,6 +7,7 @@ import { LayersSection } from '@/components/Layers';
 import { CodeShowcase } from '@/components/CodeShowcase';
 import { SequenceDiagramSection } from '@/components/SequenceDiagram';
 import { LiveProtocol } from '@/components/LiveProtocol';
+import { TryLive } from '@/components/TryLive';
 import { LiveFeed } from '@/components/LiveFeed';
 import { TestPipeline } from '@/components/TestPipeline';
 import { Manifesto } from '@/components/Manifesto';
@@ -39,6 +40,7 @@ export default function Home() {
 
         <Reveal from="up"><CodeShowcase /></Reveal>
         <Reveal from="up"><SequenceDiagramSection /></Reveal>
+        <Reveal from="up"><TryLive /></Reveal>
         <Reveal from="up"><LiveProtocol /></Reveal>
         <Reveal from="up"><LiveFeed /></Reveal>
         <Reveal from="up"><TestPipeline /></Reveal>
