@@ -6,7 +6,12 @@ const CHAINS: {
   status: 'live' | 'planned' | 'local' | 'code-ready';
   explorer?: string;
 }[] = [
-  { name: 'Anvil', shortName: 'anvil', status: 'local' },
+  {
+    name: 'Anvil',
+    shortName: 'anvil',
+    status: 'local',
+    explorer: 'https://github.com/enesakb/agentmesh#quick-start',
+  },
   { name: 'Polygon Amoy', shortName: 'amoy', status: 'planned', explorer: 'https://amoy.polygonscan.com' },
   { name: 'Base Sepolia', shortName: 'base', status: 'planned', explorer: 'https://sepolia.basescan.org' },
   { name: 'Arbitrum Sepolia', shortName: 'arb', status: 'planned', explorer: 'https://sepolia.arbiscan.io' },

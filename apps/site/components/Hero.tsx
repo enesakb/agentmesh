@@ -106,8 +106,8 @@ export function Hero() {
               <span>→</span> github
               <span className="text-bg/40">/agentmesh</span>
             </a>
-            <a className="btn-ghost" href="#live">
-              live demo
+            <a className="btn-ghost" href="#try">
+              try live
             </a>
             <a className="btn-ghost" href="#sequence">
               read the spec
