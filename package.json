@@ -1,0 +1,36 @@
+{
+  "name": "agentmesh",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AgentMesh — agent economy protocol stack (identity, wallet, payment, discovery, marketplace, reputation)",
+  "packageManager": "pnpm@11.0.8",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean && rimraf node_modules .turbo",
+    "contracts:build": "cd contracts && forge build",
+    "contracts:test": "cd contracts && forge test -vv",
+    "contracts:coverage": "cd contracts && forge coverage --report summary",
+    "anvil": "anvil --host 0.0.0.0 --chain-id 31337 --block-time 1",
+    "deploy:local": "pwsh -File scripts/deploy-local.ps1",
+    "deploy:amoy": "pwsh -File scripts/deploy-amoy.ps1",
+    "demo": "pwsh -File scripts/run-demo.ps1",
+    "lint": "biome check .",
+    "format": "biome format --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "turbo": "^2.3.0",
+    "typescript": "^5.7.0",
+    "rimraf": "^6.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "viem": "2.21.0"
+    }
+  }
+}

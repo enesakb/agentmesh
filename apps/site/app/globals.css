@@ -1,0 +1,260 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-bg: #07090a;
+  --color-bg-elevated: #0e1112;
+  --color-bg-card: #111416;
+  --color-fg: #ecece6;
+  --color-fg-muted: #7a7a73;
+  --color-fg-dim: #4a4a45;
+  --color-line: #1d2123;
+  --color-line-bright: #2c3134;
+  --color-phosphor: #b8ff3a;
+  --color-phosphor-dim: #688f1c;
+  --color-amber: #ffb84d;
+  --color-rust: #c75a3c;
+
+  --font-display: var(--font-fraunces);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-sans: var(--font-jetbrains-mono);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-phosphor);
+    color: var(--color-bg);
+  }
+
+  body {
+    background-image:
+      radial-gradient(circle at 0% 0%, color-mix(in oklab, var(--color-phosphor) 5%, transparent), transparent 40%),
+      radial-gradient(circle at 100% 100%, color-mix(in oklab, var(--color-amber) 3%, transparent), transparent 50%),
+      linear-gradient(var(--color-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+    background-size:
+      auto, auto, 64px 64px, 64px 64px;
+    background-attachment: fixed;
+    background-position:
+      0 0, 0 0, -1px -1px, -1px -1px;
+  }
+
+  /* Page content sits above the global 3D scene (z-index 0). */
+  main {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Scanline overlay — extremely subtle */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 2px,
+      rgba(255, 255, 255, 0.012) 2px,
+      rgba(255, 255, 255, 0.012) 3px
+    );
+  }
+
+  /* Film-grain noise */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
+  }
+}
+
+/* ─── animation primitives ─── */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes scan {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    text-shadow:
+      0 0 0px color-mix(in oklab, var(--color-phosphor) 70%, transparent),
+      0 0 18px color-mix(in oklab, var(--color-phosphor) 35%, transparent);
+  }
+  50% {
+    text-shadow:
+      0 0 2px color-mix(in oklab, var(--color-phosphor) 80%, transparent),
+      0 0 28px color-mix(in oklab, var(--color-phosphor) 45%, transparent);
+  }
+}
+
+.rise {
+  opacity: 0;
+  animation: rise 700ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+.blink {
+  animation: blink 1s steps(1) infinite;
+}
+
+.scanbar {
+  position: absolute;
+  inset-inline: 0;
+  height: 64px;
+  background: linear-gradient(180deg, transparent, color-mix(in oklab, var(--color-phosphor) 6%, transparent), transparent);
+  animation: scan 9s linear infinite;
+  pointer-events: none;
+}
+
+.glow-phosphor {
+  animation: glow 4s ease-in-out infinite;
+}
+
+/* ─── utility classes ─── */
+.crisp-edge {
+  image-rendering: pixelated;
+}
+
+.dot-leader {
+  background-image: radial-gradient(circle, currentColor 0.5px, transparent 1px);
+  background-size: 6px 1px;
+  background-repeat: repeat-x;
+  background-position: 0 50%;
+}
+
+.bracketed::before {
+  content: '[';
+  margin-right: 0.25ch;
+  color: var(--color-fg-muted);
+}
+.bracketed::after {
+  content: ']';
+  margin-left: 0.25ch;
+  color: var(--color-fg-muted);
+}
+
+/* Inline reveal hover for layer rows */
+.layer-row {
+  transition:
+    background 200ms,
+    transform 200ms;
+}
+.layer-row:hover {
+  background: color-mix(in oklab, var(--color-phosphor) 4%, transparent);
+}
+.layer-row:hover .layer-arrow {
+  transform: translateX(6px);
+  color: var(--color-phosphor);
+}
+.layer-arrow {
+  transition: transform 200ms, color 200ms;
+}
+
+/* CTA — bordered, fills phosphor on hover */
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.4rem;
+  background: var(--color-phosphor);
+  color: var(--color-bg);
+  border: 1px solid var(--color-phosphor);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: filter 180ms, transform 180ms;
+}
+.btn-primary:hover {
+  filter: brightness(1.15);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 0 var(--color-phosphor-dim);
+}
+.btn-primary:active {
+  transform: translate(0, 0);
+  box-shadow: 0 0 0 0 var(--color-phosphor-dim);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.2rem;
+  border: 1px solid var(--color-line-bright);
+  color: var(--color-fg);
+  background: transparent;
+  letter-spacing: 0.04em;
+  transition: border-color 180ms, color 180ms, background 180ms;
+}
+.btn-ghost:hover {
+  border-color: var(--color-phosphor);
+  color: var(--color-phosphor);
+  background: color-mix(in oklab, var(--color-phosphor) 6%, transparent);
+}
+
+/* code block treatment */
+.code {
+  background: color-mix(in oklab, var(--color-bg-card) 92%, transparent);
+  border: 1px solid var(--color-line);
+  padding: 1.5rem 1.75rem;
+  font-size: 0.825rem;
+  line-height: 1.65;
+  white-space: pre;
+  overflow-x: auto;
+  position: relative;
+}
+
+/* code highlight color tokens (we pre-tag spans) */
+.tok-key { color: var(--color-phosphor); }
+.tok-str { color: var(--color-amber); }
+.tok-num { color: #93c5fd; }
+.tok-com { color: var(--color-fg-dim); font-style: italic; }
+.tok-fn  { color: #f0e8b8; }
+.tok-typ { color: #c8b6ff; }
+.tok-pun { color: var(--color-fg-muted); }
+
+/* sequence diagram */
+.seq {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  white-space: pre;
+  letter-spacing: 0;
+}

@@ -1,0 +1,9 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+# esbuild needs its postinstall to fetch the platform-specific binary.
+allowBuilds:
+  '@biomejs/biome': true
+  esbuild: true
+  sharp: true
