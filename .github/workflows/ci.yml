@@ -51,9 +51,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Read pnpm version from package.json's `packageManager` field.
+      # Specifying a `version:` here together with `packageManager` causes
+      # pnpm/action-setup@v4 to error with ERR_PNPM_BAD_PM_VERSION.
       - uses: pnpm/action-setup@v4
-        with:
-          version: 11
 
       - uses: actions/setup-node@v4
         with:
@@ -74,10 +75,13 @@ jobs:
       - name: Build site
         run: pnpm --filter @agentmesh/site build
 
+  # Solana build is slow (4+ min) and fails on the placeholder program ID
+  # until we ship a real keypair. Run on demand only — never on push, so it
+  # never sends red-status emails.
   solana:
     name: Anchor · Solana (build only)
     runs-on: ubuntu-latest
-    continue-on-error: true # while program ID placeholder remains
+    if: github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v4
 
