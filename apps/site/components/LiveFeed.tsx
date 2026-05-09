@@ -37,7 +37,14 @@ const ADDRS = [
   '0x6F2E5b…C77e',
 ];
 
-const CAPS = ['data.weather', 'data.crypto-price', 'compute.image', 'data.news', 'compute.text', 'data.sports'];
+const CAPS = [
+  'data.weather',
+  'data.crypto-price',
+  'compute.image',
+  'data.news',
+  'compute.text',
+  'data.sports',
+];
 const PRICES = ['0.001', '0.0008', '0.002', '0.0015', '0.0005', '0.0025'];
 
 function pick<T>(arr: T[], i: number): T {
@@ -102,7 +109,7 @@ export function LiveFeed() {
 
   const totals = {
     agents: 18,
-    orders: 1247 + (events.filter((e) => e.kind === 'order').length * 3),
+    orders: 1247 + events.filter((e) => e.kind === 'order').length * 3,
     volume: '4.892',
     score: 2840,
   };
@@ -151,7 +158,11 @@ export function LiveFeed() {
         </div>
       </div>
 
-      <style>{`@keyframes feed-rise { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }`}</style>
+      <style>
+        {
+          '@keyframes feed-rise { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }'
+        }
+      </style>
     </section>
   );
 }

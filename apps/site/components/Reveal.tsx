@@ -26,7 +26,6 @@ export function Reveal({
   threshold = 0.12,
   duration = 800,
   className,
-  as: Tag = 'div',
 }: {
   children: React.ReactNode;
   from?: Direction;
@@ -34,19 +33,15 @@ export function Reveal({
   threshold?: number;
   duration?: number;
   className?: string;
-  as?: keyof React.JSX.IntrinsicElements;
 }) {
-  const ref = useRef<HTMLElement | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    if (
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setVisible(true);
       return;
     }
@@ -75,6 +70,9 @@ export function Reveal({
     willChange: 'opacity, transform',
   };
 
-  // @ts-expect-error — generic Tag attaches ref differently per element
-  return <Tag ref={ref} className={className} style={style}>{children}</Tag>;
+  return (
+    <div ref={ref} className={className} style={style}>
+      {children}
+    </div>
+  );
 }

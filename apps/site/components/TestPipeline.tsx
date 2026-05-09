@@ -50,7 +50,11 @@ export function TestPipeline() {
   return (
     <section id="tests" className="relative py-24 lg:py-32 border-t border-line bg-bg">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
-        <SectionHeading kicker="x — proof" title="99 tests green" subtitle="reproducible · public · clone & run" />
+        <SectionHeading
+          kicker="x — proof"
+          title="99 tests green"
+          subtitle="reproducible · public · clone & run"
+        />
 
         <div className="mt-12 lg:mt-16 grid grid-cols-12 gap-8">
           {/* Big totals on the left */}
@@ -76,15 +80,15 @@ export function TestPipeline() {
               {'\n'}
               <span className="text-phosphor">$ </span>pnpm contracts:test
               {'\n'}
-              <span className="text-fg-muted">  Suite result: 66 passed, 0 failed</span>
+              <span className="text-fg-muted"> Suite result: 66 passed, 0 failed</span>
               {'\n'}
               <span className="text-phosphor">$ </span>pnpm -r test
               {'\n'}
-              <span className="text-fg-muted">  33 passed (3 packages)</span>
+              <span className="text-fg-muted"> 33 passed (3 packages)</span>
               {'\n'}
               <span className="text-phosphor">$ </span>pnpm demo
               {'\n'}
-              <span className="text-fg-muted">  ✅ end-to-end · six layers · 6.3s</span>
+              <span className="text-fg-muted"> ✅ end-to-end · six layers · 6.3s</span>
             </pre>
           </div>
 
@@ -125,7 +129,9 @@ export function TestPipeline() {
             <ul className="space-y-3 text-[11.5px] leading-[1.6]">
               {INVARIANTS.map((inv, i) => (
                 <li key={i} className="flex gap-2">
-                  <span className="text-phosphor mt-0.5 tabular-nums">{(i + 1).toString().padStart(2, '0')}</span>
+                  <span className="text-phosphor mt-0.5 tabular-nums">
+                    {(i + 1).toString().padStart(2, '0')}
+                  </span>
                   <code className="text-fg-muted font-mono">{inv}</code>
                 </li>
               ))}

@@ -9,7 +9,8 @@ const QA: { q: string; a: React.ReactNode }[] = [
       <>
         Stripe assumes a human with a card. Two AI agents transacting with each other can&apos;t open Stripe
         accounts; even if they could, the platform takes a cut of every micropayment. AgentMesh runs at the
-        protocol level — no platform, no KYC, no account opening. The fee is the gas; the rule is the contract.
+        protocol level — no platform, no KYC, no account opening. The fee is the gas; the rule is the
+        contract.
       </>
     ),
   },
@@ -37,9 +38,10 @@ const QA: { q: string; a: React.ReactNode }[] = [
     q: 'How is this different from ai16z / Virtuals / Olas?',
     a: (
       <>
-        Each of those is excellent at 1–2 layers. ai16z is great at agent <em>behaviour</em> (Eliza framework).
-        Virtuals tokenises agents inside a launchpad. Olas does bounty marketplaces. None of them solve the full
-        six-layer stack, and most of them deliberately keep agents inside a walled garden. See the{' '}
+        Each of those is excellent at 1–2 layers. ai16z is great at agent <em>behaviour</em> (Eliza
+        framework). Virtuals tokenises agents inside a launchpad. Olas does bounty marketplaces. None of them
+        solve the full six-layer stack, and most of them deliberately keep agents inside a walled garden. See
+        the{' '}
         <a href="#compare" className="text-phosphor underline-offset-4 hover:underline">
           comparison matrix
         </a>{' '}
@@ -71,8 +73,8 @@ const QA: { q: string; a: React.ReactNode }[] = [
     q: 'What happens if an agent goes rogue and drains its wallet?',
     a: (
       <>
-        Two safety nets ship in v0.1: a <span className="text-fg">SpendingPolicyModule</span> hook (daily limit
-        + per-tx limit + target blacklist, enforced before every <code>execute</code>) and a{' '}
+        Two safety nets ship in v0.1: a <span className="text-fg">SpendingPolicyModule</span> hook (daily
+        limit + per-tx limit + target blacklist, enforced before every <code>execute</code>) and a{' '}
         <span className="text-fg">RecoveryModule</span> (Argent-style M-of-N guardian recovery with a 48h
         timelock, owner can cancel). Neither is bulletproof. Both raise the bar.
       </>
@@ -82,8 +84,8 @@ const QA: { q: string; a: React.ReactNode }[] = [
     q: "What's the licence?",
     a: (
       <>
-        MIT. Use it, fork it, sell it. Attribution appreciated, not required. If you ship a real product on it,
-        we&apos;d love to hear about it on the GitHub issues — but you owe us nothing.
+        MIT. Use it, fork it, sell it. Attribution appreciated, not required. If you ship a real product on
+        it, we&apos;d love to hear about it on the GitHub issues — but you owe us nothing.
       </>
     ),
   },

@@ -54,7 +54,9 @@ export function Hero() {
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10 pt-16 lg:pt-24 pb-20 lg:pb-32 grid grid-cols-12 gap-6 relative z-10">
         {/* Marginalia */}
         <div className="col-span-12 lg:col-span-2 text-[10px] uppercase tracking-[0.22em] text-fg-muted">
-          <div className="rise" style={{ animationDelay: '60ms' }}>─── manifest</div>
+          <div className="rise" style={{ animationDelay: '60ms' }}>
+            ─── manifest
+          </div>
           <div className="mt-2 text-fg-dim leading-relaxed rise" style={{ animationDelay: '120ms' }}>
             sha256
             <br />
@@ -66,7 +68,10 @@ export function Hero() {
 
         {/* Wordmark + tagline */}
         <div className="col-span-12 lg:col-span-7 flex flex-col">
-          <div className="text-[11px] uppercase tracking-[0.32em] text-amber rise" style={{ animationDelay: '0ms' }}>
+          <div
+            className="text-[11px] uppercase tracking-[0.32em] text-amber rise"
+            style={{ animationDelay: '0ms' }}
+          >
             <span className="text-phosphor">▮</span> protocol stack — six layers, one mesh
           </div>
 
@@ -114,12 +119,24 @@ export function Hero() {
             className="mt-12 pt-6 border-t border-line text-[11px] uppercase tracking-[0.18em] text-fg-muted flex flex-wrap gap-x-5 gap-y-2 rise"
             style={{ animationDelay: '480ms' }}
           >
-            <span><span className="text-phosphor">01</span> identity</span>
-            <span><span className="text-phosphor">02</span> wallet</span>
-            <span><span className="text-phosphor">03</span> payment</span>
-            <span><span className="text-phosphor">04</span> discovery</span>
-            <span><span className="text-phosphor">05</span> marketplace</span>
-            <span><span className="text-phosphor">06</span> reputation</span>
+            <span>
+              <span className="text-phosphor">01</span> identity
+            </span>
+            <span>
+              <span className="text-phosphor">02</span> wallet
+            </span>
+            <span>
+              <span className="text-phosphor">03</span> payment
+            </span>
+            <span>
+              <span className="text-phosphor">04</span> discovery
+            </span>
+            <span>
+              <span className="text-phosphor">05</span> marketplace
+            </span>
+            <span>
+              <span className="text-phosphor">06</span> reputation
+            </span>
           </div>
         </div>
 

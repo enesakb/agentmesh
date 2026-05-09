@@ -1,20 +1,20 @@
 /**
  * /api/weather/[city]
  *
- * A real, working AgentMesh agent endpoint, deployed on Vercel.
+ * Real AgentMesh agent endpoint deployed on Vercel.
  *
- * GET without `X-PAYMENT` → 402 Payment Required + accept body
- * GET with valid demo payment → 200 weather JSON
- *
- * "Demo payment" = an orderId previously issued by /api/orders. We hold the
- * order book in module memory (resets on cold start, fine for demo). In the
- * real protocol the orderId is on-chain; here we sign it with a server-side
- * key so it can't be forged from the client.
- *
- * Replay-protected: each orderId is single-use. Idempotent within a request.
+ * GET without X-PAYMENT → 402 Payment Required + accept body
+ * GET with valid signed orderId → 200 weather JSON
  */
 import type { NextRequest } from 'next/server';
-import { orders, ALPHA_ADDRESS, MARKETPLACE_ADDRESS, LISTING_ID, PRICE_WEI } from '@/lib/orders';
+import {
+  ALPHA_ADDRESS,
+  LISTING_ID,
+  MARKETPLACE_ADDRESS,
+  PRICE_WEI,
+  TOKEN_TTL_MS,
+  verifyOrder,
+} from '@/lib/orders';
 
 const PROVIDER_ID = ALPHA_ADDRESS;
 export const runtime = 'edge';
@@ -38,7 +38,7 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ city: strin
             amount: PRICE_WEI,
             asset: 'native',
             resource: `/api/weather/${city}`,
-            expiresAt: Date.now() + 60_000,
+            expiresAt: Date.now() + TOKEN_TTL_MS,
           },
         ],
       },
@@ -46,30 +46,19 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ city: strin
     );
   }
 
-  const parsed = parsePaymentHeader(header);
-  if (!parsed) {
+  const orderId = parseHeader(header);
+  if (!orderId) {
     return Response.json(
-      { error: 'invalid X-PAYMENT header (expected agentmesh-marketplace;orderId=<n>)' },
+      { error: 'invalid X-PAYMENT header (expected agentmesh-marketplace;orderId=<token>)' },
       { status: 402 },
     );
   }
 
-  const order = orders.get(parsed.orderId);
-  if (!order) {
-    return Response.json({ error: `unknown orderId ${parsed.orderId}` }, { status: 402 });
-  }
-  if (order.status !== 'created') {
-    return Response.json({ error: `orderId ${parsed.orderId} already consumed` }, { status: 402 });
-  }
-  if (order.listingId !== LISTING_ID) {
-    return Response.json({ error: 'orderId is for a different listing' }, { status: 402 });
+  const verification = await verifyOrder(orderId);
+  if (!verification.ok) {
+    return Response.json({ error: verification.reason }, { status: 402 });
   }
 
-  // Mark consumed → can't be replayed
-  order.status = 'completed';
-  order.completedAt = Date.now();
-
-  // Generate believable weather. Same input always returns same weather (deterministic per city).
   const weather = generateWeather(city);
 
   return Response.json({
@@ -77,13 +66,13 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ city: strin
     ...weather,
     source: 'demo-alpha',
     served_by: PROVIDER_ID,
-    orderId: parsed.orderId,
+    orderId: verification.orderId.slice(0, 24) + '…',
     settled: true,
     timestamp: new Date().toISOString(),
   });
 }
 
-function parsePaymentHeader(h: string): { orderId: string } | null {
+function parseHeader(h: string): string | null {
   const parts = h.split(';').map((s) => s.trim());
   if (parts[0] !== 'agentmesh-marketplace') return null;
   for (const p of parts.slice(1)) {
@@ -91,19 +80,18 @@ function parsePaymentHeader(h: string): { orderId: string } | null {
     if (eq < 0) continue;
     const k = p.slice(0, eq).trim();
     const v = p.slice(eq + 1).trim();
-    if (k === 'orderId') return { orderId: v };
+    if (k === 'orderId') return v;
   }
   return null;
 }
 
 function generateWeather(city: string) {
-  // FNV-1a-ish hash so the same city always returns the same weather within a process.
   let h = 2166136261;
   for (let i = 0; i < city.length; i++) {
     h = (h ^ city.charCodeAt(i)) >>> 0;
     h = Math.imul(h, 16777619) >>> 0;
   }
-  const tempC = 8 + ((h % 250) / 250) * 22; // 8..30°C
+  const tempC = 8 + ((h % 250) / 250) * 22;
   const conditions = ['clear', 'cloudy', 'partly cloudy', 'rain', 'fog'];
   return {
     tempC: Math.round(tempC * 10) / 10,

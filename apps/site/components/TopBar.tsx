@@ -12,14 +12,30 @@ export function TopBar() {
         </div>
 
         <nav className="hidden lg:flex items-center gap-5">
-          <a href="#how" className="hover:text-phosphor transition-colors">how</a>
-          <a href="#layers" className="hover:text-phosphor transition-colors">layers</a>
-          <a href="#sdk" className="hover:text-phosphor transition-colors">sdk</a>
-          <a href="#live" className="hover:text-phosphor transition-colors">try it</a>
-          <a href="#tests" className="hover:text-phosphor transition-colors">99·tests</a>
-          <a href="#manifesto" className="hover:text-phosphor transition-colors">manifest</a>
-          <a href="#compare" className="hover:text-phosphor transition-colors">vs.</a>
-          <a href="#faq" className="hover:text-phosphor transition-colors">faq</a>
+          <a href="#how" className="hover:text-phosphor transition-colors">
+            how
+          </a>
+          <a href="#layers" className="hover:text-phosphor transition-colors">
+            layers
+          </a>
+          <a href="#sdk" className="hover:text-phosphor transition-colors">
+            sdk
+          </a>
+          <a href="#live" className="hover:text-phosphor transition-colors">
+            try it
+          </a>
+          <a href="#tests" className="hover:text-phosphor transition-colors">
+            99·tests
+          </a>
+          <a href="#manifesto" className="hover:text-phosphor transition-colors">
+            manifest
+          </a>
+          <a href="#compare" className="hover:text-phosphor transition-colors">
+            vs.
+          </a>
+          <a href="#faq" className="hover:text-phosphor transition-colors">
+            faq
+          </a>
         </nav>
 
         <div className="flex items-center gap-4">

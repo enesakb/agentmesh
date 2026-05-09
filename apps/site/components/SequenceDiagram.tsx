@@ -50,8 +50,9 @@ export function SequenceDiagramSection() {
               accept option.
             </Note>
             <Note label="03 escrow">
-              <span className="text-fg">placeOrder()</span> locks 0.001 Ξ in <span className="text-fg">ServiceMarketplace</span>.
-              Provider can only release it on completion — or consumer refunds after the timeout.
+              <span className="text-fg">placeOrder()</span> locks 0.001 Ξ in{' '}
+              <span className="text-fg">ServiceMarketplace</span>. Provider can only release it on completion
+              — or consumer refunds after the timeout.
             </Note>
             <Note label="04 settlement">
               The retried request carries <span className="text-amber">X-PAYMENT</span>. Provider verifies the

@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   --color-bg: #07090a;
@@ -39,16 +39,20 @@
   }
 
   body {
-    background-image:
-      radial-gradient(circle at 0% 0%, color-mix(in oklab, var(--color-phosphor) 5%, transparent), transparent 40%),
-      radial-gradient(circle at 100% 100%, color-mix(in oklab, var(--color-amber) 3%, transparent), transparent 50%),
-      linear-gradient(var(--color-line) 1px, transparent 1px),
+    background-image: radial-gradient(
+        circle at 0% 0%,
+        color-mix(in oklab, var(--color-phosphor) 5%, transparent),
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 100% 100%,
+        color-mix(in oklab, var(--color-amber) 3%, transparent),
+        transparent 50%
+      ), linear-gradient(var(--color-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
-    background-size:
-      auto, auto, 64px 64px, 64px 64px;
+    background-size: auto, auto, 64px 64px, 64px 64px;
     background-attachment: fixed;
-    background-position:
-      0 0, 0 0, -1px -1px, -1px -1px;
+    background-position: 0 0, 0 0, -1px -1px, -1px -1px;
   }
 
   /* Page content sits above the global 3D scene (z-index 0). */
@@ -59,7 +63,7 @@
 
   /* Scanline overlay — extremely subtle */
   body::before {
-    content: '';
+    content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
@@ -75,7 +79,7 @@
 
   /* Film-grain noise */
   body::after {
-    content: '';
+    content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
@@ -116,14 +120,12 @@
 @keyframes glow {
   0%,
   100% {
-    text-shadow:
-      0 0 0px color-mix(in oklab, var(--color-phosphor) 70%, transparent),
-      0 0 18px color-mix(in oklab, var(--color-phosphor) 35%, transparent);
+    text-shadow: 0 0 0px color-mix(in oklab, var(--color-phosphor) 70%, transparent), 0 0 18px
+      color-mix(in oklab, var(--color-phosphor) 35%, transparent);
   }
   50% {
-    text-shadow:
-      0 0 2px color-mix(in oklab, var(--color-phosphor) 80%, transparent),
-      0 0 28px color-mix(in oklab, var(--color-phosphor) 45%, transparent);
+    text-shadow: 0 0 2px color-mix(in oklab, var(--color-phosphor) 80%, transparent), 0 0 28px
+      color-mix(in oklab, var(--color-phosphor) 45%, transparent);
   }
 }
 
@@ -140,7 +142,12 @@
   position: absolute;
   inset-inline: 0;
   height: 64px;
-  background: linear-gradient(180deg, transparent, color-mix(in oklab, var(--color-phosphor) 6%, transparent), transparent);
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in oklab, var(--color-phosphor) 6%, transparent),
+    transparent
+  );
   animation: scan 9s linear infinite;
   pointer-events: none;
 }
@@ -162,21 +169,19 @@
 }
 
 .bracketed::before {
-  content: '[';
+  content: "[";
   margin-right: 0.25ch;
   color: var(--color-fg-muted);
 }
 .bracketed::after {
-  content: ']';
+  content: "]";
   margin-left: 0.25ch;
   color: var(--color-fg-muted);
 }
 
 /* Inline reveal hover for layer rows */
 .layer-row {
-  transition:
-    background 200ms,
-    transform 200ms;
+  transition: background 200ms, transform 200ms;
 }
 .layer-row:hover {
   background: color-mix(in oklab, var(--color-phosphor) 4%, transparent);
@@ -243,13 +248,28 @@
 }
 
 /* code highlight color tokens (we pre-tag spans) */
-.tok-key { color: var(--color-phosphor); }
-.tok-str { color: var(--color-amber); }
-.tok-num { color: #93c5fd; }
-.tok-com { color: var(--color-fg-dim); font-style: italic; }
-.tok-fn  { color: #f0e8b8; }
-.tok-typ { color: #c8b6ff; }
-.tok-pun { color: var(--color-fg-muted); }
+.tok-key {
+  color: var(--color-phosphor);
+}
+.tok-str {
+  color: var(--color-amber);
+}
+.tok-num {
+  color: #93c5fd;
+}
+.tok-com {
+  color: var(--color-fg-dim);
+  font-style: italic;
+}
+.tok-fn {
+  color: #f0e8b8;
+}
+.tok-typ {
+  color: #c8b6ff;
+}
+.tok-pun {
+  color: var(--color-fg-muted);
+}
 
 /* sequence diagram */
 .seq {

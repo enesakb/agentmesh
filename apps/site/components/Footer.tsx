@@ -55,7 +55,8 @@ export function Footer() {
       <div className="border-t border-line">
         <div className="mx-auto max-w-[1400px] px-6 lg:px-10 py-5 flex items-center justify-between text-[10px] uppercase tracking-[0.22em] text-fg-dim">
           <div>
-            agentmesh / v0.1 / mvp <span className="mx-3">·</span> not audited <span className="mx-3">·</span> mit
+            agentmesh / v0.1 / mvp <span className="mx-3">·</span> not audited <span className="mx-3">·</span>{' '}
+            mit
           </div>
           <div className="flex items-center gap-3">
             <span className="text-phosphor">●</span> green <span className="text-fg-muted">·</span>{' '}

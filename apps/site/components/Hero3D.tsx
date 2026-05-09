@@ -11,7 +11,7 @@
  *   - All in a single scene, no postprocessing → ~1ms per frame on M-class GPU
  *   - dpr capped at 2; r3f frameloop=demand would be too static for ambient feel
  */
-import { Canvas, useFrame, type ThreeElements } from '@react-three/fiber';
+import { Canvas, type ThreeElements, useFrame } from '@react-three/fiber';
 import { Suspense, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
@@ -55,7 +55,7 @@ function Constellation() {
       for (const s of sorted) {
         const key = i < s.j ? `${i}-${s.j}` : `${s.j}-${i}`;
         if (!result.some((e) => `${e[2]}` === key)) {
-          result.push([nodes[i].p, nodes[s.j].p, parseFloat(key.replace('-', '.'))]);
+          result.push([nodes[i].p, nodes[s.j].p, Number.parseFloat(key.replace('-', '.'))]);
         }
       }
     }

@@ -66,7 +66,15 @@ export function NetworkViz() {
       {nodes.map((n, i) => (
         <g key={`n-${i}`}>
           {i === 0 && (
-            <circle cx={n.x} cy={n.y} r={n.r + 5} fill="none" stroke="#b8ff3a" strokeWidth="0.6" opacity="0.6">
+            <circle
+              cx={n.x}
+              cy={n.y}
+              r={n.r + 5}
+              fill="none"
+              stroke="#b8ff3a"
+              strokeWidth="0.6"
+              opacity="0.6"
+            >
               <animate attributeName="r" from={n.r + 5} to={n.r + 14} dur="2.4s" repeatCount="indefinite" />
               <animate attributeName="opacity" from="0.6" to="0" dur="2.4s" repeatCount="indefinite" />
             </circle>

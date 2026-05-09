@@ -1,5 +1,5 @@
-import { Tilt } from './Tilt';
 import { Reveal } from './Reveal';
+import { Tilt } from './Tilt';
 
 // Six layers — vertical editorial table, each row a chapter.
 // Each layer carries: number, name (large display serif), contract/package, key signature.
@@ -62,7 +62,7 @@ const layers: Layer[] = [
     name: 'Reputation',
     artifact: 'ReputationRegistry.sol',
     blurb:
-      'Append-only. score = (successRate · √min(N,100)) / 10. Fed by marketplace events. Sybils can\'t fake history cheaply.',
+      "Append-only. score = (successRate · √min(N,100)) / 10. Fed by marketplace events. Sybils can't fake history cheaply.",
     signature: 'getReputationScore(agent) → uint256 // 0..10000',
     tag: 'append-only',
   },
@@ -148,9 +148,7 @@ export function SectionHeading({
           {title}
         </h2>
       </div>
-      {subtitle && (
-        <div className="text-[11px] uppercase tracking-[0.22em] text-fg-muted">{subtitle}</div>
-      )}
+      {subtitle && <div className="text-[11px] uppercase tracking-[0.22em] text-fg-muted">{subtitle}</div>}
     </div>
   );
 }

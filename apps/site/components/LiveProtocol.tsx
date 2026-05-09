@@ -28,29 +28,99 @@ type Event = {
 
 const SCRIPT: Event[] = [
   { layer: 'idle', dir: 'none', text: '$ pnpm demo', delay: 600 },
-  { layer: 'idle', dir: 'none', text: '[orch] anvil up · contracts deployed · 7 addresses written', delay: 500 },
+  {
+    layer: 'idle',
+    dir: 'none',
+    text: '[orch] anvil up · contracts deployed · 7 addresses written',
+    delay: 500,
+  },
 
-  { layer: 'identity', dir: 'a', text: "[alpha] AgentRegistry.register('demo-alpha', ['data.weather'])", delay: 500 },
+  {
+    layer: 'identity',
+    dir: 'a',
+    text: "[alpha] AgentRegistry.register('demo-alpha', ['data.weather'])",
+    delay: 500,
+  },
   { layer: 'identity', dir: 'a', text: '[alpha] ✓ identity bound to 0x74De...f633', delay: 400 },
-  { layer: 'wallet', dir: 'a', text: '[alpha] AgentAccountFactory.createAccount(salt=1) ⤳ 0x74De...f633', delay: 500 },
-  { layer: 'wallet', dir: 'a', text: '[alpha] SpendingPolicy: 1.0 Ξ / day · 0.5 Ξ / tx · hook installed', delay: 500 },
-  { layer: 'marketplace', dir: 'a', text: '[alpha] ServiceMarketplace.createListing(0.001 Ξ) → listing #5', delay: 500 },
+  {
+    layer: 'wallet',
+    dir: 'a',
+    text: '[alpha] AgentAccountFactory.createAccount(salt=1) ⤳ 0x74De...f633',
+    delay: 500,
+  },
+  {
+    layer: 'wallet',
+    dir: 'a',
+    text: '[alpha] SpendingPolicy: 1.0 Ξ / day · 0.5 Ξ / tx · hook installed',
+    delay: 500,
+  },
+  {
+    layer: 'marketplace',
+    dir: 'a',
+    text: '[alpha] ServiceMarketplace.createListing(0.001 Ξ) → listing #5',
+    delay: 500,
+  },
   { layer: 'idle', dir: 'none', text: '[alpha] http://127.0.0.1:4001/weather/:city  ◾ ready', delay: 500 },
 
-  { layer: 'identity', dir: 'b', text: "[beta] AgentRegistry.register('demo-beta', ['consumer'])", delay: 500 },
+  {
+    layer: 'identity',
+    dir: 'b',
+    text: "[beta] AgentRegistry.register('demo-beta', ['consumer'])",
+    delay: 500,
+  },
   { layer: 'wallet', dir: 'b', text: '[beta] AgentAccount @ 0xba6e...bc0A · funded 1.0 Ξ', delay: 500 },
-  { layer: 'discovery', dir: 'b→a', text: "[beta] findByCapability(data.weather) → [α 0x74De...f633]", delay: 500 },
-  { layer: 'marketplace', dir: 'b→a', text: '[beta] getActiveListingsByProvider(α) → [#5 @ 0.001 Ξ]', delay: 450 },
+  {
+    layer: 'discovery',
+    dir: 'b→a',
+    text: '[beta] findByCapability(data.weather) → [α 0x74De...f633]',
+    delay: 500,
+  },
+  {
+    layer: 'marketplace',
+    dir: 'b→a',
+    text: '[beta] getActiveListingsByProvider(α) → [#5 @ 0.001 Ξ]',
+    delay: 450,
+  },
 
   { layer: 'payment', dir: 'b→a', text: '[beta] → GET http://127.0.0.1:4001/weather/Berlin', delay: 400 },
-  { layer: 'payment', dir: 'a→b', text: '[alpha] ← 402 Payment Required  accepts:[agentmesh-marketplace]', delay: 500 },
-  { layer: 'marketplace', dir: 'b→a', text: '[beta] placeOrder(5) { value: 0.001 Ξ }   ⟶ orderId = 4 (escrow held)', delay: 600 },
+  {
+    layer: 'payment',
+    dir: 'a→b',
+    text: '[alpha] ← 402 Payment Required  accepts:[agentmesh-marketplace]',
+    delay: 500,
+  },
+  {
+    layer: 'marketplace',
+    dir: 'b→a',
+    text: '[beta] placeOrder(5) { value: 0.001 Ξ }   ⟶ orderId = 4 (escrow held)',
+    delay: 600,
+  },
 
-  { layer: 'payment', dir: 'b→a', text: '[beta] → GET /weather/Berlin   X-PAYMENT: agentmesh-marketplace;orderId=4', delay: 500 },
-  { layer: 'payment', dir: 'a', text: '[alpha] verifyOrder(4) → status=Created · provider matches · price matches', delay: 500 },
-  { layer: 'payment', dir: 'a→b', text: '[alpha] ← 200  { "city":"Berlin", "tempC":20.0, "source":"demo-alpha" }', delay: 500 },
+  {
+    layer: 'payment',
+    dir: 'b→a',
+    text: '[beta] → GET /weather/Berlin   X-PAYMENT: agentmesh-marketplace;orderId=4',
+    delay: 500,
+  },
+  {
+    layer: 'payment',
+    dir: 'a',
+    text: '[alpha] verifyOrder(4) → status=Created · provider matches · price matches',
+    delay: 500,
+  },
+  {
+    layer: 'payment',
+    dir: 'a→b',
+    text: '[alpha] ← 200  { "city":"Berlin", "tempC":20.0, "source":"demo-alpha" }',
+    delay: 500,
+  },
 
-  { layer: 'marketplace', dir: 'a', text: '[alpha] completeOrder(4, proof=0x7b22...)   ⟶ escrow released', delay: 500 },
+  {
+    layer: 'marketplace',
+    dir: 'a',
+    text: '[alpha] completeOrder(4, proof=0x7b22...)   ⟶ escrow released',
+    delay: 500,
+  },
   { layer: 'reputation', dir: 'both', text: '[reputation] α: successCount → 4 · score → 2000', delay: 400 },
   { layer: 'reputation', dir: 'both', text: '[reputation] β: successCount → 4 · score → 2000', delay: 400 },
 
@@ -101,7 +171,11 @@ export function LiveProtocol() {
   return (
     <section id="live" className="relative py-24 lg:py-32 border-t border-line bg-bg">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
-        <SectionHeading kicker="vi — try it" title="run the protocol" subtitle="22 events · 6 layers · live" />
+        <SectionHeading
+          kicker="vi — try it"
+          title="run the protocol"
+          subtitle="22 events · 6 layers · live"
+        />
 
         <div className="mt-12 lg:mt-16 grid grid-cols-12 gap-8">
           {/* Diagram */}
@@ -167,9 +241,7 @@ export function LiveProtocol() {
             >
               {visibleLog.length === 0 ? (
                 <span className="text-fg-dim">
-                  &gt; press{' '}
-                  <span className="text-phosphor">run demo</span>{' '}
-                  to begin.
+                  &gt; press <span className="text-phosphor">run demo</span> to begin.
                   <br />
                   <br />
                   <span className="text-fg-muted">// transcript drawn from the actual demo run</span>
@@ -274,12 +346,7 @@ function Diagram({ current, pulse }: { current: Event | null; pulse: number }) {
 
             {/* phosphor pulse along the active lane */}
             {isActive && (dir === 'a→b' || dir === 'b→a') && (
-              <circle
-                key={`pulse-${pulse}-${l.key}`}
-                r="5"
-                fill="#b8ff3a"
-                filter="url(#phosphorGlow)"
-              >
+              <circle key={`pulse-${pulse}-${l.key}`} r="5" fill="#b8ff3a" filter="url(#phosphorGlow)">
                 <animate
                   attributeName="cx"
                   from={dir === 'a→b' ? X_LEFT : X_RIGHT}
@@ -307,7 +374,7 @@ function Diagram({ current, pulse }: { current: Event | null; pulse: number }) {
           letterSpacing="1.5"
           fontFamily="JetBrains Mono, monospace"
         >
-          06  reputation  ←  outcome
+          06 reputation ← outcome
         </text>
         <line
           x1={X_LEFT}
@@ -367,7 +434,13 @@ function Diagram({ current, pulse }: { current: Event | null; pulse: number }) {
   );
 }
 
-function Node({ x, y, label, sub, active }: { x: number; y: number; label: string; sub: string; active: boolean }) {
+function Node({
+  x,
+  y,
+  label,
+  sub,
+  active,
+}: { x: number; y: number; label: string; sub: string; active: boolean }) {
   return (
     <g>
       <circle

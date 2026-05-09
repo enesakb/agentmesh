@@ -73,7 +73,10 @@ export function Comparison() {
             </thead>
             <tbody>
               {ROWS.map((row, i) => (
-                <tr key={row.layer} className={`border-b border-line ${i === ROWS.length - 1 ? 'bg-bg-card/30' : ''}`}>
+                <tr
+                  key={row.layer}
+                  className={`border-b border-line ${i === ROWS.length - 1 ? 'bg-bg-card/30' : ''}`}
+                >
                   <td className="p-4 lg:p-5">
                     <span className="text-fg-muted text-[10px] mr-2">
                       {(i + 1).toString().padStart(2, '0')}

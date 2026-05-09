@@ -54,7 +54,7 @@ export function TryLive() {
         text: `${r.status} ${r.statusText} · ${JSON.stringify(body).slice(0, 110)}`,
       });
       if (r.status !== 402) {
-        append({ kind: 'err', ts: Date.now(), text: 'expected 402, got ' + r.status });
+        append({ kind: 'err', ts: Date.now(), text: `expected 402, got ${r.status}` });
         return;
       }
       append({
@@ -122,7 +122,7 @@ export function TryLive() {
           text: '→ orderId is now consumed. retry will be rejected (replay protection).',
         });
       } else {
-        append({ kind: 'err', ts: Date.now(), text: 'request rejected: ' + (body?.error ?? 'unknown') });
+        append({ kind: 'err', ts: Date.now(), text: `request rejected: ${body?.error ?? 'unknown'}` });
       }
     } catch (e) {
       append({ kind: 'err', ts: Date.now(), text: String(e) });
@@ -140,7 +140,13 @@ export function TryLive() {
 
   const buttonForPhase = (() => {
     if (phase === 0)
-      return { label: '01 · GET /weather (no payment)', action: () => { setPhase(1); step1(); } };
+      return {
+        label: '01 · GET /weather (no payment)',
+        action: () => {
+          setPhase(1);
+          step1();
+        },
+      };
     if (phase === 1) return { label: '⏱ awaiting 402 …', action: null };
     if (phase === 2) return { label: '02 · POST /api/orders', action: step2 };
     if (phase === 3) return { label: '03 · retry with X-PAYMENT', action: step3 };
@@ -150,13 +156,17 @@ export function TryLive() {
   return (
     <section id="try" className="relative py-24 lg:py-32 border-t border-line bg-bg">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
-        <SectionHeading kicker="vi · live · real" title="try the agent" subtitle="real http · no simulation" />
+        <SectionHeading
+          kicker="vi · live · real"
+          title="try the agent"
+          subtitle="real http · no simulation"
+        />
 
         <p className="mt-6 max-w-[60ch] text-[14px] leading-[1.7] text-fg-muted">
-          The button below makes a <span className="text-fg">real HTTP request</span> to a Vercel Edge Function
-          deployed alongside this site. The function speaks the AgentMesh x402 protocol — it returns 402,
-          accepts a marketplace orderId, replies with weather, and rejects replay. No chain settlement, but every
-          other layer is real.
+          The button below makes a <span className="text-fg">real HTTP request</span> to a Vercel Edge
+          Function deployed alongside this site. The function speaks the AgentMesh x402 protocol — it returns
+          402, accepts a marketplace orderId, replies with weather, and rejects replay. No chain settlement,
+          but every other layer is real.
         </p>
 
         <div className="mt-12 grid grid-cols-12 gap-8">
@@ -192,13 +202,7 @@ export function TryLive() {
               {(['idle', 'fetched', '402 received', 'order placed', 'paid · 200'] as const).map((s, i) => (
                 <span
                   key={s}
-                  className={
-                    i === phase
-                      ? 'text-phosphor'
-                      : i < phase
-                        ? 'text-fg'
-                        : 'text-fg-dim'
-                  }
+                  className={i === phase ? 'text-phosphor' : i < phase ? 'text-fg' : 'text-fg-dim'}
                 >
                   {i === phase ? '●' : i < phase ? '✓' : '○'} {s}
                 </span>
@@ -226,8 +230,7 @@ export function TryLive() {
                   </div>
                 </div>
                 <div className="mt-3 pt-3 border-t border-line text-[10.5px] text-fg-dim">
-                  served by{' '}
-                  <span className="text-fg">{String(data.served_by)}</span> · order{' '}
+                  served by <span className="text-fg">{String(data.served_by)}</span> · order{' '}
                   <span className="text-fg">{String(data.orderId)}</span> ·{' '}
                   <span className="text-phosphor">settled</span>
                 </div>

@@ -1,30 +1,27 @@
 /**
  * /api/orders
  *
- * POST → places a new "order" (escrow not real, but the orderId is binding for
- * a single weather call). Returns { orderId }.
- *
- * GET → returns recent orders (for the live activity feed).
+ * POST → issue a new HMAC-signed order token. The weather endpoint can verify
+ * it without any shared store, so it works across Vercel Edge isolates.
  */
-import { orders, makeOrder } from '@/lib/orders';
+import { issueOrder } from '@/lib/orders';
 
 export const runtime = 'edge';
 
 export async function POST() {
-  const o = makeOrder();
-  orders.set(o.id, o);
+  const o = await issueOrder();
   return Response.json({
     orderId: o.id,
     listingId: o.listingId,
     priceWei: o.priceWei,
     expiresAt: o.expiresAt,
-    note: 'demo order — single-use, redeemable at GET /api/weather/:city via X-PAYMENT header',
+    note: 'demo order — redeemable at GET /api/weather/:city via X-PAYMENT header within 60s',
   });
 }
 
 export async function GET() {
-  const recent = Array.from(orders.values())
-    .sort((a, b) => b.createdAt - a.createdAt)
-    .slice(0, 20);
-  return Response.json({ count: orders.size, orders: recent });
+  return Response.json({
+    note:
+      'POST to this endpoint to receive a fresh signed orderId. (No order list — stateless demo.)',
+  });
 }

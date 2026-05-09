@@ -1,0 +1,100 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contracts:
+    name: Foundry · Solidity
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: contracts
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
+
+      - name: Install OZ + forge-std
+        run: |
+          forge install --no-git --shallow foundry-rs/forge-std OpenZeppelin/openzeppelin-contracts@v5.1.0 || true
+
+      - name: Build
+        run: forge build --sizes
+
+      - name: Test
+        run: forge test -vv --gas-report
+
+      - name: Coverage
+        run: forge coverage --report summary --report lcov
+        continue-on-error: true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: forge-coverage
+          path: contracts/lcov.info
+          if-no-files-found: ignore
+
+  typescript:
+    name: pnpm · TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile=false
+
+      - name: Typecheck
+        run: pnpm -r typecheck
+
+      - name: Test
+        run: pnpm -r --filter '@agentmesh/shared' --filter '@agentmesh/x402-server' --filter '@agentmesh/x402-client' test
+
+      - name: Biome lint
+        run: pnpm exec biome check .
+
+      - name: Build site
+        run: pnpm --filter @agentmesh/site build
+
+  solana:
+    name: Anchor · Solana (build only)
+    runs-on: ubuntu-latest
+    continue-on-error: true # while program ID placeholder remains
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Solana CLI
+        run: |
+          sh -c "$(curl -sSfL https://release.anza.xyz/stable/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+
+      - name: Install Anchor
+        run: |
+          cargo install --git https://github.com/coral-xyz/anchor avm --locked --force
+          avm install 0.31.1
+          avm use 0.31.1
+
+      - name: Anchor build
+        run: anchor build

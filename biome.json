@@ -3,13 +3,27 @@
   "files": {
     "ignore": [
       "node_modules",
+      "**/node_modules",
       "dist",
+      "**/dist",
       ".turbo",
+      "**/.turbo",
+      ".next",
+      "**/.next",
+      ".vercel",
+      "**/.vercel",
       "contracts/lib",
       "contracts/out",
       "contracts/cache",
       "contracts/broadcast",
-      "deployments"
+      "deployments",
+      "programs",
+      "target",
+      "**/target",
+      "*.tsbuildinfo",
+      "**/*.tsbuildinfo",
+      "next-env.d.ts",
+      "**/next-env.d.ts"
     ]
   },
   "organizeImports": { "enabled": true },
@@ -19,11 +33,23 @@
       "recommended": true,
       "suspicious": {
         "noExplicitAny": "off",
-        "noConsoleLog": "off"
+        "noConsoleLog": "off",
+        "noArrayIndexKey": "off",
+        "noCommentText": "off"
+      },
+      "a11y": {
+        "useButtonType": "off",
+        "useKeyWithClickEvents": "off",
+        "noLabelWithoutControl": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "off"
       },
       "style": {
         "noNonNullAssertion": "off",
-        "useNodejsImportProtocol": "warn"
+        "useNodejsImportProtocol": "warn",
+        "useSingleVarDeclarator": "off",
+        "useTemplate": "off"
       }
     }
   },

@@ -4,22 +4,19 @@ const points = [
   {
     n: 'i',
     title: 'composable',
-    body:
-      'Six layers, one stack. No glue project required. Identity is just a registry; payment is just a header; reputation is a side-effect of completed orders. Replace any layer; the wire format does not break.',
+    body: 'Six layers, one stack. No glue project required. Identity is just a registry; payment is just a header; reputation is a side-effect of completed orders. Replace any layer; the wire format does not break.',
     metric: '6 / 6',
   },
   {
     n: 'ii',
     title: 'dual-path',
-    body:
-      'The same AgentAccount is callable directly by an EOA on local anvil and via an ERC-4337 bundler on Polygon Amoy. Build today, scale tomorrow — without rewriting the demo.',
+    body: 'The same AgentAccount is callable directly by an EOA on local anvil and via an ERC-4337 bundler on Polygon Amoy. Build today, scale tomorrow — without rewriting the demo.',
     metric: 'erc-4337 v0.7',
   },
   {
     n: 'iii',
     title: 'verifiable',
-    body:
-      'Escrow + on-chain reputation + replay-protected x402. No honor system. The protocol enforces what an autonomous agent can prove, not what the operator promises.',
+    body: 'Escrow + on-chain reputation + replay-protected x402. No honor system. The protocol enforces what an autonomous agent can prove, not what the operator promises.',
     metric: 'on-chain',
   },
 ];

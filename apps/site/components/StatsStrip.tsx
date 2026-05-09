@@ -27,9 +27,7 @@ export function StatsStrip() {
             >
               {s.num}
             </div>
-            <div className="mt-4 uppercase text-[11px] tracking-[0.2em] text-fg">
-              {s.label}
-            </div>
+            <div className="mt-4 uppercase text-[11px] tracking-[0.2em] text-fg">{s.label}</div>
             <div className="mt-1 text-[12px] text-fg-muted">{s.sub}</div>
           </div>
         ))}
