@@ -1,44 +1,44 @@
 {
-  "n_agents": 5,
-  "providers": 3,
-  "consumers": 2,
-  "duration_ms": 30190,
-  "orders_placed": 0,
-  "orders_completed": 0,
+  "n_agents": 20,
+  "providers": 10,
+  "consumers": 10,
+  "duration_ms": 91313,
+  "orders_placed": 11,
+  "orders_completed": 11,
   "orders_failed": 0,
-  "settle_rate": 0,
-  "throughput_per_sec": 0,
-  "total_volume_wei": "0",
+  "settle_rate": 1,
+  "throughput_per_sec": 0.12046477500465431,
+  "total_volume_wei": "94000000000000000",
   "top_5_by_score": [
     {
       "agent": 0,
-      "success": 0,
-      "total": 0,
-      "score": 0
+      "success": 2,
+      "total": 2,
+      "score": 1000
     },
     {
       "agent": 1,
-      "success": 0,
-      "total": 0,
-      "score": 0
+      "success": 1,
+      "total": 1,
+      "score": 1000
     },
     {
       "agent": 2,
-      "success": 0,
-      "total": 0,
-      "score": 0
+      "success": 1,
+      "total": 1,
+      "score": 1000
     },
     {
       "agent": 3,
-      "success": 0,
-      "total": 0,
-      "score": 0
+      "success": 2,
+      "total": 2,
+      "score": 1000
     },
     {
-      "agent": 4,
-      "success": 0,
-      "total": 0,
-      "score": 0
+      "agent": 6,
+      "success": 1,
+      "total": 1,
+      "score": 1000
     }
   ]
 }
