@@ -21,7 +21,7 @@ export function TopBar() {
           <a href="#sdk" className="hover:text-phosphor transition-colors">
             sdk
           </a>
-          <a href="#live" className="hover:text-phosphor transition-colors">
+          <a href="#try" className="hover:text-phosphor transition-colors">
             try it
           </a>
           <a href="#tests" className="hover:text-phosphor transition-colors">

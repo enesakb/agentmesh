@@ -60,7 +60,12 @@ export async function fetchPaid(city: string): Promise<{ result: WeatherResult; 
   const t1 = Date.now();
   const r2 = await fetch(`${BASE}/api/orders`, { method: 'POST' });
   const order = (await r2.json()) as PlacedOrder;
-  tracelog.push({ ok: r2.ok, status: r2.status, body: { orderIdLen: order.orderId.length }, latencyMs: Date.now() - t1 });
+  tracelog.push({
+    ok: r2.ok,
+    status: r2.status,
+    body: { orderIdLen: order.orderId.length },
+    latencyMs: Date.now() - t1,
+  });
   if (!r2.ok) throw new Error(`placeOrder failed: ${r2.status}`);
 
   // 3) retry with X-PAYMENT

@@ -1,3 +1,11 @@
+import {
+  ALPHA_ADDRESS,
+  LISTING_ID,
+  MARKETPLACE_ADDRESS,
+  PRICE_WEI,
+  TOKEN_TTL_MS,
+  verifyOrder,
+} from '@/lib/orders';
 /**
  * /api/weather/[city]
  *
@@ -7,14 +15,6 @@
  * GET with valid signed orderId → 200 weather JSON
  */
 import type { NextRequest } from 'next/server';
-import {
-  ALPHA_ADDRESS,
-  LISTING_ID,
-  MARKETPLACE_ADDRESS,
-  PRICE_WEI,
-  TOKEN_TTL_MS,
-  verifyOrder,
-} from '@/lib/orders';
 
 const PROVIDER_ID = ALPHA_ADDRESS;
 export const runtime = 'edge';

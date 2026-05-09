@@ -21,7 +21,6 @@ export async function POST() {
 
 export async function GET() {
   return Response.json({
-    note:
-      'POST to this endpoint to receive a fresh signed orderId. (No order list — stateless demo.)',
+    note: 'POST to this endpoint to receive a fresh signed orderId. (No order list — stateless demo.)',
   });
 }

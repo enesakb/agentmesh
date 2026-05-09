@@ -2,11 +2,22 @@
  * Parallel stress test — K agents concurrently, each does R round-trips.
  * Verifies the API can handle simultaneous external integrators.
  */
-import { fetchPaid, BASE_URL } from './client.js';
+import { BASE_URL, fetchPaid } from './client.js';
 
 const K = Number(process.env.K ?? 10); // concurrent agents
 const R = Number(process.env.R ?? 5); // rounds per agent
-const cities = ['Berlin', 'Istanbul', 'Lagos', 'Tokyo', 'Mumbai', 'Lima', 'Cairo', 'Oslo', 'Bangkok', 'Reykjavik'];
+const cities = [
+  'Berlin',
+  'Istanbul',
+  'Lagos',
+  'Tokyo',
+  'Mumbai',
+  'Lima',
+  'Cairo',
+  'Oslo',
+  'Bangkok',
+  'Reykjavik',
+];
 
 console.log(`[stress:parallel] target=${BASE_URL} agents=${K} rounds_per_agent=${R} total=${K * R}\n`);
 
@@ -45,7 +56,9 @@ for (const a of agents) {
   totalOK += a.ok;
   totalFail += a.fail;
   allDurations.push(...a.durations);
-  const avg = a.durations.length ? Math.round(a.durations.reduce((s, x) => s + x, 0) / a.durations.length) : 0;
+  const avg = a.durations.length
+    ? Math.round(a.durations.reduce((s, x) => s + x, 0) / a.durations.length)
+    : 0;
   console.log(`  agent ${a.agentId.toString().padStart(2)} : ${a.ok}/${R} ok · avg ${avg}ms`);
 }
 

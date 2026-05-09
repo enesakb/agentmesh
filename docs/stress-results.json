@@ -1,1 +1,12 @@
-[{"run":1,"ok":true,"sec":30.39},{"run":2,"ok":true,"sec":28.52},{"run":3,"ok":true,"sec":28.38},{"run":4,"ok":true,"sec":29.57},{"run":5,"ok":true,"sec":28.84},{"run":6,"ok":true,"sec":28.03},{"run":7,"ok":true,"sec":28.37},{"run":8,"ok":true,"sec":28.96},{"run":9,"ok":true,"sec":28.8},{"run":10,"ok":true,"sec":30.35}]
+[
+  { "run": 1, "ok": true, "sec": 30.39 },
+  { "run": 2, "ok": true, "sec": 28.52 },
+  { "run": 3, "ok": true, "sec": 28.38 },
+  { "run": 4, "ok": true, "sec": 29.57 },
+  { "run": 5, "ok": true, "sec": 28.84 },
+  { "run": 6, "ok": true, "sec": 28.03 },
+  { "run": 7, "ok": true, "sec": 28.37 },
+  { "run": 8, "ok": true, "sec": 28.96 },
+  { "run": 9, "ok": true, "sec": 28.8 },
+  { "run": 10, "ok": true, "sec": 30.35 }
+]

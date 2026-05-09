@@ -2,10 +2,21 @@
  * Sequential stress test — N consecutive full x402 round-trips.
  * Measures p50/p95/p99 latency and verifies every result is settled.
  */
-import { fetchPaid, BASE_URL } from './client.js';
+import { BASE_URL, fetchPaid } from './client.js';
 
 const N = Number(process.env.N ?? 50);
-const cities = ['Berlin', 'Istanbul', 'Lagos', 'Tokyo', 'Mumbai', 'Lima', 'Cairo', 'Oslo', 'Bangkok', 'Reykjavik'];
+const cities = [
+  'Berlin',
+  'Istanbul',
+  'Lagos',
+  'Tokyo',
+  'Mumbai',
+  'Lima',
+  'Cairo',
+  'Oslo',
+  'Bangkok',
+  'Reykjavik',
+];
 
 const totals: { ok: number; fail: number; durations: number[]; trip: number[][] } = {
   ok: 0,

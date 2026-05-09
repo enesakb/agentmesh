@@ -93,7 +93,20 @@ export const UI_CHECKLIST = [
   },
   {
     id: 'sections.exist',
-    multi: ['#how', '#layers', '#sdk', '#sequence', '#live', '#try', '#tests', '#manifesto', '#compare', '#why', '#faq', '#feed'],
+    multi: [
+      '#how',
+      '#layers',
+      '#sdk',
+      '#sequence',
+      '#live',
+      '#try',
+      '#tests',
+      '#manifesto',
+      '#compare',
+      '#why',
+      '#faq',
+      '#feed',
+    ],
     expect: { allPresent: true },
   },
   {
@@ -103,11 +116,7 @@ export const UI_CHECKLIST = [
   },
 ];
 
-export function classifyFinding(
-  id: string,
-  result: 'pass' | 'fail',
-  detail: string,
-): Finding | null {
+export function classifyFinding(id: string, result: 'pass' | 'fail', detail: string): Finding | null {
   if (result === 'pass') return null;
   const sev = id.startsWith('try.') || id.startsWith('hero.') ? 'error' : 'warn';
   return { severity: sev, area: id, detail };

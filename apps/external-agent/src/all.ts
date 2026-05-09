@@ -3,8 +3,8 @@
  * Exit code 0 only if all three pass.
  */
 import { spawnSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const tsx = process.platform === 'win32' ? 'tsx.cmd' : 'tsx';
