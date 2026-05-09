@@ -18,9 +18,9 @@ export function Footer() {
 
         <div className="col-span-6 lg:col-span-2">
           <FooterCol title="repo">
-            <FooterLink href="https://github.com/your-handle/agentmesh">github</FooterLink>
-            <FooterLink href="https://github.com/your-handle/agentmesh/blob/main/README.md">readme</FooterLink>
-            <FooterLink href="https://github.com/your-handle/agentmesh/releases">releases</FooterLink>
+            <FooterLink href="https://github.com/enesakb/agentmesh">github</FooterLink>
+            <FooterLink href="https://github.com/enesakb/agentmesh/blob/main/README.md">readme</FooterLink>
+            <FooterLink href="https://github.com/enesakb/agentmesh/releases">releases</FooterLink>
           </FooterCol>
         </div>
 

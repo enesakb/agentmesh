@@ -29,7 +29,7 @@ Requirements:
   https://github.com/foundry-rs/foundry/releases)
 
 ```powershell
-git clone <this-repo> agentmesh && cd agentmesh
+git clone https://github.com/enesakb/agentmesh && cd agentmesh
 pnpm install
 pnpm contracts:test           # 64 unit + integration tests, all green
 pnpm demo                     # spawns anvil + deploys + runs alpha & beta

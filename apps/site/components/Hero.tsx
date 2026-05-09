@@ -97,7 +97,7 @@ export function Hero() {
 
           {/* CTA cluster */}
           <div className="mt-10 flex flex-wrap items-center gap-3 rise" style={{ animationDelay: '380ms' }}>
-            <a className="btn-primary" href="https://github.com/your-handle/agentmesh">
+            <a className="btn-primary" href="https://github.com/enesakb/agentmesh">
               <span>→</span> github
               <span className="text-bg/40">/agentmesh</span>
             </a>
