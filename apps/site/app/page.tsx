@@ -1,11 +1,14 @@
 import { TopBar } from '@/components/TopBar';
+import { ChainBar } from '@/components/ChainBar';
 import { Hero } from '@/components/Hero';
+import { HowItWorks } from '@/components/HowItWorks';
 import { StatsStrip } from '@/components/StatsStrip';
 import { LayersSection } from '@/components/Layers';
 import { CodeShowcase } from '@/components/CodeShowcase';
 import { SequenceDiagramSection } from '@/components/SequenceDiagram';
 import { LiveProtocol } from '@/components/LiveProtocol';
 import { LiveFeed } from '@/components/LiveFeed';
+import { TestPipeline } from '@/components/TestPipeline';
 import { Manifesto } from '@/components/Manifesto';
 import { Comparison } from '@/components/Comparison';
 import { Why } from '@/components/Why';
@@ -22,7 +25,9 @@ export default function Home() {
       <main>
         <TopBar />
         <Hero />
+        <ChainBar />
 
+        <Reveal from="up"><HowItWorks /></Reveal>
         <Reveal from="up"><StatsStrip /></Reveal>
         <Reveal from="up" delay={60}><LayersSection /></Reveal>
 
@@ -36,6 +41,7 @@ export default function Home() {
         <Reveal from="up"><SequenceDiagramSection /></Reveal>
         <Reveal from="up"><LiveProtocol /></Reveal>
         <Reveal from="up"><LiveFeed /></Reveal>
+        <Reveal from="up"><TestPipeline /></Reveal>
         <Reveal from="up"><Manifesto /></Reveal>
         <Reveal from="up"><Comparison /></Reveal>
         <Reveal from="up"><Why /></Reveal>

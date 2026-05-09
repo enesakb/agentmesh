@@ -18,7 +18,9 @@
     "anvil": "anvil --host 0.0.0.0 --chain-id 31337 --block-time 1",
     "deploy:local": "pwsh -File scripts/deploy-local.ps1",
     "deploy:amoy": "pwsh -File scripts/deploy-amoy.ps1",
+    "deploy:multichain": "pwsh -File scripts/deploy-multichain.ps1",
     "demo": "pwsh -File scripts/run-demo.ps1",
+    "stress": "pwsh -File scripts/stress.ps1",
     "lint": "biome check .",
     "format": "biome format --write ."
   },
