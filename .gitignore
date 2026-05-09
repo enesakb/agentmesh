@@ -12,13 +12,21 @@ contracts/lib/
 contracts/out/
 contracts/cache/
 contracts/broadcast/
-deployments/anvil.json
+
+# Per-chain deployment outputs are local-only. Each developer regenerates
+# them via `pnpm run deploy:multichain`. Production addresses, when we have
+# any, will be documented in docs/deployments.md instead.
+deployments/*.json
+
+# Secrets — never commit
 .env
 .env.*
 !.env.example
+.env.deployer
+
+# Build cruft
 *.tsbuildinfo
 next-env.d.ts
 .DS_Store
 Thumbs.db
 *.log
-`n.env.deployer
