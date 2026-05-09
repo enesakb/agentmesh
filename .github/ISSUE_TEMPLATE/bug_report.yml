@@ -1,0 +1,73 @@
+name: 🐛 Bug report
+description: Something doesn't work as documented
+title: '[bug]: '
+labels: ['bug', 'triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. The faster we can reproduce, the faster we fix.
+
+        ⚠️ **Found a security issue?** Don't post here. See
+        [Security policy](../SECURITY.md) for private disclosure.
+
+  - type: input
+    id: version
+    attributes:
+      label: Commit / version
+      description: Output of `git rev-parse HEAD` or the release tag
+    validations:
+      required: true
+
+  - type: dropdown
+    id: chain
+    attributes:
+      label: Chain
+      options:
+        - anvil (local)
+        - polygon-amoy (testnet)
+        - base-sepolia (testnet)
+        - arbitrum-sepolia (testnet)
+        - optimism-sepolia (testnet)
+        - other
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Exact commands or sequence — include `pnpm demo` log if relevant
+      placeholder: |
+        1. pnpm install
+        2. pnpm anvil
+        3. pnpm deploy:local
+        4. pnpm demo
+        5. Click "..." in TryLive
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: Include error messages, console output, on-chain tx hash if applicable
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: |
+        OS: macOS 14 / Windows 11 / Ubuntu 22.04
+        Node: 22.x
+        pnpm: 11.x
+        Foundry: 1.7.x

@@ -1,0 +1,43 @@
+name: 💡 Feature request / discussion
+description: Propose a change to the protocol or SDK
+title: '[feat]: '
+labels: ['enhancement', 'discussion']
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Concrete scenario, not abstract — "Today an agent can't X because…"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else did you think about and why is your proposal better?
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Layer affected
+      multiple: true
+      options:
+        - Identity (AgentRegistry)
+        - Wallet (AgentAccount + modules)
+        - Payment (x402)
+        - Discovery (capability search)
+        - Marketplace (ServiceMarketplace)
+        - Reputation (ReputationRegistry)
+        - SDK
+        - Site / docs
+        - Cross-chain / multi-chain
+    validations:
+      required: true

@@ -8,7 +8,11 @@
     "stress:sequential": "tsx src/sequential.ts",
     "stress:parallel": "tsx src/parallel.ts",
     "stress:adversarial": "tsx src/adversarial.ts",
-    "stress:all": "tsx src/all.ts"
+    "stress:all": "tsx src/all.ts",
+    "swarm": "tsx src/swarm.ts"
+  },
+  "dependencies": {
+    "viem": "2.21.0"
   },
   "devDependencies": {
     "tsx": "^4.19.0",
