@@ -1,19 +1,27 @@
 // Live-on chain ribbon — communicates AgentMesh's multi-chain bet at a glance.
-// "live" → green dot. "planned" → amber. "local" → muted.
-const CHAINS: { name: string; shortName: string; status: 'live' | 'planned' | 'local'; explorer?: string }[] = [
-  { name: 'Anvil', shortName: 'anvil 31337', status: 'local' },
+// "live" → green dot. "planned" → amber. "local" → muted. "code-ready" → cyan.
+const CHAINS: { name: string; shortName: string; status: 'live' | 'planned' | 'local' | 'code-ready'; explorer?: string }[] = [
+  { name: 'Anvil', shortName: 'anvil', status: 'local' },
   { name: 'Polygon Amoy', shortName: 'amoy', status: 'planned', explorer: 'https://amoy.polygonscan.com' },
   { name: 'Base Sepolia', shortName: 'base', status: 'planned', explorer: 'https://sepolia.basescan.org' },
   { name: 'Arbitrum Sepolia', shortName: 'arb', status: 'planned', explorer: 'https://sepolia.arbiscan.io' },
   { name: 'Optimism Sepolia', shortName: 'op', status: 'planned', explorer: 'https://sepolia-optimism.etherscan.io' },
   { name: 'Sonic Testnet', shortName: 'sonic', status: 'planned', explorer: 'https://testnet.sonicscan.org' },
-  { name: 'Solana', shortName: 'solana', status: 'planned' },
+  { name: 'Solana Devnet', shortName: 'solana', status: 'code-ready', explorer: 'https://github.com/enesakb/agentmesh/tree/main/programs/agentmesh' },
 ];
 
-const DOT: Record<'live' | 'planned' | 'local', string> = {
+const DOT: Record<'live' | 'planned' | 'local' | 'code-ready', string> = {
   live: 'text-phosphor',
   planned: 'text-amber',
   local: 'text-fg-muted',
+  'code-ready': 'text-rust',
+};
+
+const STATUS_LABEL: Record<'live' | 'planned' | 'local' | 'code-ready', string> = {
+  live: 'live',
+  planned: 'soon',
+  local: '',
+  'code-ready': 'code',
 };
 
 export function ChainBar() {
@@ -34,9 +42,7 @@ export function ChainBar() {
           >
             <span className={DOT[c.status]}>●</span>
             <span>{c.shortName}</span>
-            <span className="text-fg-dim ml-1">
-              {c.status === 'live' ? '' : c.status === 'planned' ? 'soon' : ''}
-            </span>
+            <span className="text-fg-dim ml-1">{STATUS_LABEL[c.status]}</span>
           </a>
         ))}
         <span className="ml-auto text-fg-dim hidden md:inline">

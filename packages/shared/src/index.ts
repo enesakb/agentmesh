@@ -91,6 +91,17 @@ export const CHAINS: Record<SupportedChain, ChainMeta> = {
   },
 };
 
+/// Solana devnet metadata (separate from CHAINS because the EVM type union
+/// would otherwise leak Solana into places that expect EVM addresses).
+export const SOLANA_DEVNET = {
+  name: 'Solana Devnet',
+  shortName: 'solana-devnet',
+  rpcUrl: 'https://api.devnet.solana.com',
+  explorerUrl: 'https://explorer.solana.com/?cluster=devnet',
+  status: 'planned' as const,
+  programId: 'AGmEsHmEsH1111111111111111111111111111111111',
+};
+
 // Back-compat exports
 export const CHAIN_IDS: Record<SupportedChain, number> = Object.fromEntries(
   Object.entries(CHAINS).map(([k, v]) => [k, v.chainId]),
