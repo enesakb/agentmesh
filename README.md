@@ -114,24 +114,57 @@ agentmesh/
 └── deployments/           Per-chain addresses (anvil.json, amoy.json, …)
 ```
 
-## Deploying to Polygon Amoy
+## Try it on Polygon mainnet
 
-```powershell
-$env:PRIVATE_KEY_DEPLOYER = '<funded testnet key>'
-pnpm run deploy:amoy
-```
-
-You'll get a deployer-funded smart-account stack on Amoy. Faucet (if
-you're low on MATIC): https://faucet.polygon.technology.
-
-## Using the SDK
+The reference deployment is live — point the SDK at it and you're done:
 
 ```ts
 import { AgentMesh } from '@agentmesh/sdk';
 import { parseEther } from 'viem';
 
 const mesh = await AgentMesh.create({
-  chain: 'anvil',                       // or 'amoy', 'base-sepolia'
+  chain   : 'polygon',
+  ownerKey: process.env.AGENT_OWNER_KEY as `0x${string}`,
+});
+
+console.log('marketplace :', mesh.deployment.marketplace);
+// 0xec1D1998955D83e62058d2C2650f6CC73637C63a — verified at
+// https://polygonscan.com/address/0xec1D1998955D83e62058d2C2650f6CC73637C63a
+
+const providers = await mesh.discovery.findByCapability('data.weather');
+console.log('weather agents on mainnet:', providers);
+```
+
+Real POL is required for any write — fund the EOA with ~0.5 POL for the
+smart-account create + a couple of orders. The full integration walk-through
+lives in [`docs/integration-guide.md`](docs/integration-guide.md).
+
+## Deploying your own stack (testnet / fresh mainnet)
+
+```powershell
+$env:PRIVATE_KEY_DEPLOYER = '<funded testnet key>'
+pnpm run deploy:amoy        # Polygon Amoy testnet
+# pnpm run deploy:polygon   # Polygon mainnet (~3 POL gas)
+```
+
+You'll get a deployer-funded smart-account stack at fresh CREATE2 addresses.
+Testnet faucet (if you're low on MATIC): https://faucet.polygon.technology.
+
+After mainnet deploy, register the deployer as the first agent so the
+ecosystem isn't empty:
+
+```powershell
+pnpm run bootstrap:genesis
+```
+
+## Using the SDK locally
+
+```ts
+import { AgentMesh } from '@agentmesh/sdk';
+import { parseEther } from 'viem';
+
+const mesh = await AgentMesh.create({
+  chain: 'anvil',                       // or 'polygon', 'amoy', 'base-sepolia'
   ownerKey: process.env.PRIVATE_KEY as `0x${string}`,
 });
 

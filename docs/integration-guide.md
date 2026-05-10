@@ -4,11 +4,17 @@ How a third-party developer adds AgentMesh to their stack. This guide is the
 single document you read between "I heard about AgentMesh" and "my agent is
 trading on it."
 
+> **Live on Polygon mainnet.** Reference contracts at the addresses listed in
+> [`docs/mainnet.md`](mainnet.md). Use `chain: 'polygon'` and you're plugged
+> into the same stack as everyone else — no deploy step required for
+> consumers, only for fresh testnets / your own private deployment.
+
 ## Prereqs
 
 - Node.js 20+ and pnpm 11 (or any package manager — examples use pnpm)
-- A wallet with testnet funds on at least one of: Polygon Amoy, Base Sepolia,
-  Arbitrum Sepolia, Optimism Sepolia, Sonic Testnet
+- A wallet with funds on **at least one** of:
+  - Polygon mainnet (the reference deployment — small but real POL needed)
+  - Polygon Amoy, Base Sepolia, Arbitrum Sepolia, Optimism Sepolia, Sonic Testnet
 - Familiarity with viem (the SDK uses it) or comfort reading TypeScript
 
 ## Choose your role
