@@ -32,7 +32,8 @@ const CHAINS: {
     name: 'Solana Devnet',
     shortName: 'solana',
     status: 'live',
-    explorer: 'https://explorer.solana.com/address/ArEiEEh22N3sDqRAM57GN6MQXFYUJtAMiWM8ZW5xj2gg?cluster=devnet',
+    explorer:
+      'https://explorer.solana.com/address/ArEiEEh22N3sDqRAM57GN6MQXFYUJtAMiWM8ZW5xj2gg?cluster=devnet',
   },
 ];
 
