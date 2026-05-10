@@ -13,6 +13,11 @@ contracts/out/
 contracts/cache/
 contracts/broadcast/
 
+# Solana / Anchor / Cargo build outputs
+target/
+Cargo.lock
+*.so
+
 # Per-chain deployment outputs default to local-only. Public reference
 # deployments (e.g. mainnet) are exempted below so the SDK can load
 # addresses from the repo.
