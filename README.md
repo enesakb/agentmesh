@@ -22,8 +22,33 @@ all composable.
 | `SpendingPolicyModule` | [`0x4b6E2A371B026FA1483e2faeaBAF826F9ee21B7F`](https://polygonscan.com/address/0x4b6E2A371B026FA1483e2faeaBAF826F9ee21B7F) |
 | `RecoveryModule` | [`0x70F9D229B37B88a986ffc7CA7381E08Ad47264cC`](https://polygonscan.com/address/0x70F9D229B37B88a986ffc7CA7381E08Ad47264cC) |
 
+All seven contracts are **source-verified on Polygonscan** (green tick).
 Full deployment record incl. tx hashes:
 [`deployments/polygon.json`](deployments/polygon.json) · [`docs/mainnet.md`](docs/mainnet.md)
+
+## Multi-chain status
+
+The protocol has zero chain-specific code; every layer compiles to the
+same bytecode anywhere. What's deployed where:
+
+| Chain | Status | Notes |
+|---|---|---|
+| Polygon mainnet (137) | 🟢 **live + verified** | Reference deployment — addresses above |
+| Polygon Amoy (80002) | ⚪ deploy-ready | `pnpm run deploy:amoy` (faucet POL needed) |
+| Base Sepolia (84532) | ⚪ deploy-ready | `pnpm run deploy:multichain` |
+| Arbitrum Sepolia (421614) | ⚪ deploy-ready | same |
+| Optimism Sepolia (11155420) | ⚪ deploy-ready | same |
+| Sonic testnet (64165) | ⚪ deploy-ready | same |
+| Solana Devnet | ⚪ code-complete | Anchor program in [`programs/agentmesh/`](programs/agentmesh/), needs `solana program deploy` |
+| Base / Arbitrum / Optimism mainnet | ⚪ deploy-ready | same `Deploy.s.sol`, ~$5-10 gas each |
+
+The SDK switches chains with one field:
+
+```ts
+await AgentMesh.create({ chain: 'polygon' });          // ← live now
+await AgentMesh.create({ chain: 'amoy' });             // ← any deploy-ready chain
+await AgentMesh.create({ chain: 'base-sepolia' });
+```
 
 ## The six layers
 
