@@ -5,18 +5,50 @@
 $ErrorActionPreference = 'Stop'
 
 Write-Host "=== Step 1/3: Solana CLI (Agave) ===" -ForegroundColor Cyan
+$releasesRoot = Join-Path $env:USERPROFILE '.local\share\solana\install\releases'
+$activeRelease = Join-Path $env:USERPROFILE '.local\share\solana\install\active_release'
+
+# Try to use the symlink-based installer; on Windows without Developer Mode
+# / admin, the symlink step fails with error 1314 ("privilege not held").
+# We catch that and fall back to a direct PATH wiring against the latest
+# downloaded release directory.
 $installer = Join-Path $env:TEMP 'solana-install-init.exe'
 Invoke-WebRequest `
     -Uri 'https://release.anza.xyz/stable/solana-install-init-x86_64-pc-windows-msvc.exe' `
     -OutFile $installer `
     -UseBasicParsing
-& $installer stable
-if ($LASTEXITCODE -ne 0) { throw "Solana install failed" }
 
-# Add to current-session PATH so we can keep going
-$solanaBin = Join-Path $env:LOCALAPPDATA 'solana\install\active_release\bin'
-if (-not (Test-Path $solanaBin)) {
-    $solanaBin = Join-Path $env:USERPROFILE '.local\share\solana\install\active_release\bin'
+& $installer stable 2>&1 | Tee-Object -Variable installLog | Out-Host
+$symlinkFailed = ($installLog -match 'os error 1314' -or -not (Test-Path $activeRelease))
+
+if ($symlinkFailed) {
+    Write-Host ""
+    Write-Host "Symlink step blocked by Windows (no Developer Mode / admin)." -ForegroundColor Yellow
+    Write-Host "Falling back to direct PATH wiring." -ForegroundColor Yellow
+
+    if (-not (Test-Path $releasesRoot)) {
+        throw "No Solana release found at $releasesRoot — installer didn't download. Re-run."
+    }
+    $latest = Get-ChildItem $releasesRoot -Directory |
+        Sort-Object LastWriteTime -Descending |
+        Select-Object -First 1
+    $solanaBin = Join-Path $latest.FullName 'solana-release\bin'
+    if (-not (Test-Path $solanaBin)) {
+        $solanaBin = Join-Path $latest.FullName 'bin'
+    }
+    if (-not (Test-Path (Join-Path $solanaBin 'solana.exe'))) {
+        throw "solana.exe not found under $solanaBin — release layout unexpected."
+    }
+    Write-Host "Using release dir: $solanaBin" -ForegroundColor Green
+} else {
+    $solanaBin = Join-Path $activeRelease 'bin'
+}
+
+# Permanently add to user PATH (so future shells pick it up)
+$userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
+if (-not ($userPath -split ';' -contains $solanaBin)) {
+    [Environment]::SetEnvironmentVariable('Path', "$solanaBin;$userPath", 'User')
+    Write-Host "Added to user PATH (permanent)." -ForegroundColor Green
 }
 $env:Path = "$solanaBin;$env:Path"
 
