@@ -4,7 +4,7 @@
  * TryLive — real interactive widget that exercises the hosted /api/weather
  * endpoint exactly like a beta agent would.
  *
- * Step 0: idle. User clicks "fetch /weather/Berlin"
+ * Step 0: idle. User types a city, clicks "fetch /weather/{city}"
  * Step 1: GET → server returns 402 with x402 accept body. Show it.
  * Step 2: User clicks "place order". Client POSTs /api/orders → orderId.
  * Step 3: User clicks "retry with payment". Client repeats GET with
@@ -26,7 +26,7 @@ type LogEntry = {
 
 export function TryLive() {
   const [phase, setPhase] = useState<Phase>(0);
-  const [city, setCity] = useState('Berlin');
+  const [city, setCity] = useState('');
   const [orderId, setOrderId] = useState<string | null>(null);
   const [log, setLog] = useState<LogEntry[]>([]);
   const [busy, setBusy] = useState(false);
@@ -141,7 +141,7 @@ export function TryLive() {
   const buttonForPhase = (() => {
     if (phase === 0)
       return {
-        label: '01 · GET /weather (no payment)',
+        label: '01 · GET /weather/{city} (no payment)',
         action: () => {
           setPhase(1);
           step1();
@@ -176,6 +176,7 @@ export function TryLive() {
               <label className="text-[11px] uppercase tracking-[0.22em] text-fg-muted">city</label>
               <input
                 value={city}
+                placeholder="type a city…"
                 onChange={(e) => setCity(e.target.value.replace(/[^a-zA-Z\s-]/g, '').slice(0, 32))}
                 className="bg-bg-card border border-line px-3 py-2 text-sm text-fg outline-none focus:border-phosphor"
                 disabled={phase !== 0}
@@ -185,7 +186,7 @@ export function TryLive() {
             <div>
               <button
                 onClick={buttonForPhase.action ?? undefined}
-                disabled={!buttonForPhase.action || busy}
+                disabled={!buttonForPhase.action || busy || (phase === 0 && city.trim() === '')}
                 className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {buttonForPhase.label}

@@ -82,7 +82,7 @@ const SCRIPT: Event[] = [
     delay: 450,
   },
 
-  { layer: 'payment', dir: 'b→a', text: '[beta] → GET http://127.0.0.1:4001/weather/Berlin', delay: 400 },
+  { layer: 'payment', dir: 'b→a', text: '[beta] → GET http://127.0.0.1:4001/weather/{city}', delay: 400 },
   {
     layer: 'payment',
     dir: 'a→b',
@@ -99,7 +99,7 @@ const SCRIPT: Event[] = [
   {
     layer: 'payment',
     dir: 'b→a',
-    text: '[beta] → GET /weather/Berlin   X-PAYMENT: agentmesh-marketplace;orderId=4',
+    text: '[beta] → GET /weather/{city}   X-PAYMENT: agentmesh-marketplace;orderId=4',
     delay: 500,
   },
   {
@@ -111,7 +111,7 @@ const SCRIPT: Event[] = [
   {
     layer: 'payment',
     dir: 'a→b',
-    text: '[alpha] ← 200  { "city":"Berlin", "tempC":20.0, "source":"demo-alpha" }',
+    text: '[alpha] ← 200  { "city":"{city}", "tempC":20.0, "source":"demo-alpha" }',
     delay: 500,
   },
 

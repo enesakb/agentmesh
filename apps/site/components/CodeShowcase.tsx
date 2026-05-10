@@ -79,7 +79,7 @@ export function CodeShowcase() {
               <Hl type="key">const</Hl> res <Hl type="pun">=</Hl> <Hl type="key">await</Hl> mesh.payment.
               <Hl type="fn">fetchWithPayment</Hl>({'{'}
               {'\n'} url<Hl type="pun">:</Hl>{' '}
-              <Hl type="str">{`\`https://${'$'}{provider}/weather/Berlin\``}</Hl>,{'\n'} maxAmountWei
+              <Hl type="str">{`\`https://${'$'}{provider}/weather/${'$'}{city}\``}</Hl>,{'\n'} maxAmountWei
               <Hl type="pun">:</Hl> <Hl type="fn">parseEther</Hl>(<Hl type="str">'0.01'</Hl>),
               {'\n'}
               {'}'});

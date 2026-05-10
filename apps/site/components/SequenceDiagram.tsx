@@ -7,19 +7,19 @@ const diagram = String.raw`
        │ ─────────────────────▶ │                  │                        │
        │ ◀── [α]  α=0xba6e..bc0A ◯                 │                        │
        │                                                                    │
-       │ 02  GET  /weather/Berlin   (no X-PAYMENT)                          │
+       │ 02  GET  /weather/{city}   (no X-PAYMENT)                          │
        │ ─────────────────────────────────────────────────────────────────▶ │
        │ ◀──── 402  accepts:[{ scheme: 'agentmesh-marketplace', amount, listingId }]
        │                                                                    │
        │ 03  placeOrder(listingId)  { value: 0.001 Ξ }                      │
        │ ─────────────────────────▶│   escrow held ✦   orderId = 04         │
        │                                                                    │
-       │ 04  GET  /weather/Berlin                                           │
+       │ 04  GET  /weather/{city}                                           │
        │     X-PAYMENT: agentmesh-marketplace;orderId=04                    │
        │ ─────────────────────────────────────────────────────────────────▶ │
        │                                          provider verifies on-chain
        │                                          (status, listingId, price)
-       │ ◀──── 200  { city: 'Berlin', tempC: 20.0 }                         │
+       │ ◀──── 200  { city: '{city}', tempC: 20.0 }                         │
        │                                                                    │
        │                                          completeOrder(04, proof)  │
        │                                          ─────────────────────▶◯   │
