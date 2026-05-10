@@ -15,21 +15,21 @@
  * `docs/swarm-results.json` for the site to render.
  */
 import { writeFileSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  createPublicClient,
-  createWalletClient,
   http,
-  parseEther,
-  encodeFunctionData,
-  decodeEventLog,
-  keccak256,
-  stringToBytes,
   type Address,
   type Hex,
+  createPublicClient,
+  createWalletClient,
+  decodeEventLog,
+  encodeFunctionData,
+  keccak256,
+  parseEther,
+  stringToBytes,
 } from 'viem';
-import { privateKeyToAccount, generatePrivateKey } from 'viem/accounts';
+import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts';
 import { foundry } from 'viem/chains';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -43,83 +43,183 @@ const RPC = process.env.ANVIL_RPC ?? 'http://127.0.0.1:8545';
 
 // Inline minimal ABIs so we don't need workspace links.
 const factoryAbi = [
-  { name: 'createAccount', type: 'function', stateMutability: 'nonpayable',
-    inputs: [{ name: 'owner', type: 'address' }, { name: 'salt', type: 'uint256' }],
-    outputs: [{ name: '', type: 'address' }] },
-  { name: 'getAddress', type: 'function', stateMutability: 'view',
-    inputs: [{ name: 'owner', type: 'address' }, { name: 'salt', type: 'uint256' }],
-    outputs: [{ name: '', type: 'address' }] },
+  {
+    name: 'createAccount',
+    type: 'function',
+    stateMutability: 'nonpayable',
+    inputs: [
+      { name: 'owner', type: 'address' },
+      { name: 'salt', type: 'uint256' },
+    ],
+    outputs: [{ name: '', type: 'address' }],
+  },
+  {
+    name: 'getAddress',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [
+      { name: 'owner', type: 'address' },
+      { name: 'salt', type: 'uint256' },
+    ],
+    outputs: [{ name: '', type: 'address' }],
+  },
 ] as const;
 
 const accountAbi = [
-  { name: 'execute', type: 'function', stateMutability: 'nonpayable',
-    inputs: [{ name: 'target', type: 'address' }, { name: 'value', type: 'uint256' }, { name: 'data', type: 'bytes' }],
-    outputs: [] },
+  {
+    name: 'execute',
+    type: 'function',
+    stateMutability: 'nonpayable',
+    inputs: [
+      { name: 'target', type: 'address' },
+      { name: 'value', type: 'uint256' },
+      { name: 'data', type: 'bytes' },
+    ],
+    outputs: [],
+  },
 ] as const;
 
 const registryAbi = [
-  { name: 'register', type: 'function', stateMutability: 'nonpayable',
-    inputs: [{ name: 'name', type: 'string' }, { name: 'metadataURI', type: 'string' }, { name: 'capabilities', type: 'bytes32[]' }],
-    outputs: [{ name: '', type: 'uint256' }] },
-  { name: 'findByCapability', type: 'function', stateMutability: 'view',
+  {
+    name: 'register',
+    type: 'function',
+    stateMutability: 'nonpayable',
+    inputs: [
+      { name: 'name', type: 'string' },
+      { name: 'metadataURI', type: 'string' },
+      { name: 'capabilities', type: 'bytes32[]' },
+    ],
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    name: 'findByCapability',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [{ name: 'capability', type: 'bytes32' }],
-    outputs: [{ name: '', type: 'address[]' }] },
-  { name: 'isRegistered', type: 'function', stateMutability: 'view',
-    inputs: [{ name: 'agent', type: 'address' }], outputs: [{ name: '', type: 'bool' }] },
+    outputs: [{ name: '', type: 'address[]' }],
+  },
+  {
+    name: 'isRegistered',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ name: 'agent', type: 'address' }],
+    outputs: [{ name: '', type: 'bool' }],
+  },
 ] as const;
 
 const marketAbi = [
-  { name: 'createListing', type: 'function', stateMutability: 'nonpayable',
-    inputs: [{ name: 'serviceURI', type: 'string' }, { name: 'priceWei', type: 'uint256' }],
-    outputs: [{ name: '', type: 'uint256' }] },
-  { name: 'placeOrder', type: 'function', stateMutability: 'payable',
-    inputs: [{ name: 'listingId', type: 'uint256' }],
-    outputs: [{ name: '', type: 'uint256' }] },
-  { name: 'completeOrder', type: 'function', stateMutability: 'nonpayable',
-    inputs: [{ name: 'orderId', type: 'uint256' }, { name: 'proof', type: 'bytes' }],
-    outputs: [] },
-  { name: 'getActiveListingsByProvider', type: 'function', stateMutability: 'view',
-    inputs: [{ name: 'provider', type: 'address' }],
-    outputs: [{ name: '', type: 'uint256[]' }] },
-  { name: 'getListing', type: 'function', stateMutability: 'view',
-    inputs: [{ name: 'listingId', type: 'uint256' }],
-    outputs: [{ name: '', type: 'tuple', components: [
-      { name: 'provider', type: 'address' },
+  {
+    name: 'createListing',
+    type: 'function',
+    stateMutability: 'nonpayable',
+    inputs: [
       { name: 'serviceURI', type: 'string' },
       { name: 'priceWei', type: 'uint256' },
-      { name: 'active', type: 'bool' },
-    ]}] },
-  { name: 'nextOrderId', type: 'function', stateMutability: 'view',
-    inputs: [], outputs: [{ name: '', type: 'uint256' }] },
-  { name: 'OrderPlaced', type: 'event', inputs: [
-    { indexed: true, name: 'orderId', type: 'uint256' },
-    { indexed: true, name: 'listingId', type: 'uint256' },
-    { indexed: true, name: 'consumer', type: 'address' },
-    { indexed: false, name: 'provider', type: 'address' },
-    { indexed: false, name: 'priceWei', type: 'uint256' },
-  ]},
+    ],
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    name: 'placeOrder',
+    type: 'function',
+    stateMutability: 'payable',
+    inputs: [{ name: 'listingId', type: 'uint256' }],
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    name: 'completeOrder',
+    type: 'function',
+    stateMutability: 'nonpayable',
+    inputs: [
+      { name: 'orderId', type: 'uint256' },
+      { name: 'proof', type: 'bytes' },
+    ],
+    outputs: [],
+  },
+  {
+    name: 'getActiveListingsByProvider',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ name: 'provider', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256[]' }],
+  },
+  {
+    name: 'getListing',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ name: 'listingId', type: 'uint256' }],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          { name: 'provider', type: 'address' },
+          { name: 'serviceURI', type: 'string' },
+          { name: 'priceWei', type: 'uint256' },
+          { name: 'active', type: 'bool' },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'nextOrderId',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    name: 'OrderPlaced',
+    type: 'event',
+    inputs: [
+      { indexed: true, name: 'orderId', type: 'uint256' },
+      { indexed: true, name: 'listingId', type: 'uint256' },
+      { indexed: true, name: 'consumer', type: 'address' },
+      { indexed: false, name: 'provider', type: 'address' },
+      { indexed: false, name: 'priceWei', type: 'uint256' },
+    ],
+  },
 ] as const;
 
 const reputationAbi = [
-  { name: 'getReputation', type: 'function', stateMutability: 'view',
+  {
+    name: 'getReputation',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [{ name: 'agent', type: 'address' }],
-    outputs: [{ name: '', type: 'tuple', components: [
-      { name: 'totalTxCount', type: 'uint128' },
-      { name: 'successCount', type: 'uint128' },
-      { name: 'failureCount', type: 'uint128' },
-      { name: 'totalVolumeWei', type: 'uint256' },
-      { name: 'firstSeenTimestamp', type: 'uint64' },
-      { name: 'lastSeenTimestamp', type: 'uint64' },
-      { name: 'uniqueCounterpartiesCount', type: 'uint128' },
-    ]}] },
-  { name: 'getReputationScore', type: 'function', stateMutability: 'view',
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          { name: 'totalTxCount', type: 'uint128' },
+          { name: 'successCount', type: 'uint128' },
+          { name: 'failureCount', type: 'uint128' },
+          { name: 'totalVolumeWei', type: 'uint256' },
+          { name: 'firstSeenTimestamp', type: 'uint64' },
+          { name: 'lastSeenTimestamp', type: 'uint64' },
+          { name: 'uniqueCounterpartiesCount', type: 'uint128' },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'getReputationScore',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [{ name: 'agent', type: 'address' }],
-    outputs: [{ name: '', type: 'uint256' }] },
+    outputs: [{ name: '', type: 'uint256' }],
+  },
 ] as const;
 
 const CAPABILITIES = [
-  'data.weather', 'data.crypto-price', 'data.news', 'data.sports',
-  'compute.image', 'compute.text', 'compute.search', 'compute.translate',
+  'data.weather',
+  'data.crypto-price',
+  'data.news',
+  'data.sports',
+  'compute.image',
+  'compute.text',
+  'compute.search',
+  'compute.translate',
 ];
 
 interface Deployment {
@@ -351,7 +451,9 @@ async function main() {
   for (const a of agents) {
     await registerAndList(a, deployment);
   }
-  console.log(`[swarm] ✓ registry populated, ${agents.filter((a) => a.role === 'provider').length} listings active`);
+  console.log(
+    `[swarm] ✓ registry populated, ${agents.filter((a) => a.role === 'provider').length} listings active`,
+  );
 
   const start = Date.now();
   let placed = 0;
@@ -424,7 +526,9 @@ async function main() {
   };
 
   console.log('\n=== summary ===');
-  console.log(`  agents          : ${summary.n_agents} (${summary.providers} prov + ${summary.consumers} cons)`);
+  console.log(
+    `  agents          : ${summary.n_agents} (${summary.providers} prov + ${summary.consumers} cons)`,
+  );
   console.log(`  duration        : ${(wallTime / 1000).toFixed(1)}s`);
   console.log(`  orders placed   : ${summary.orders_placed}`);
   console.log(`  orders settled  : ${summary.orders_completed}`);
