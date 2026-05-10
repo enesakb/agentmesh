@@ -53,9 +53,13 @@ Profesyonel repo'nun tüm parçaları yerinde:
 - 6 katman aynı semantikte
 - SDK adapter scaffold
 
-### 🤖 50-agent swarm
-- `apps/external-agent/src/swarm.ts` hazır
-- `pnpm --filter @agentmesh/external-agent swarm` ile çalışıyor
+### 🤖 50-agent swarm — **gerçekten koştu**
+- 50 ajan spawn (25 prov + 25 cons), her biri owner EOA + CREATE2 smart account
+- 50 identity registration, 25 marketplace listing
+- 7 sipariş yapıldı, 6 tamamlandı = **%85.7 başarı**
+- 1033 saniye (17 dakika) gerçek on-chain aktivite
+- Throughput düşük (sequential RPC, optimization sonra) ama **protocol 50 ajanı handle etti**
+- Sonuçlar: `docs/swarm-results.json`
 
 ---
 
