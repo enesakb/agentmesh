@@ -91,13 +91,19 @@ export class AgentMesh {
 
   static async create(config: AgentMeshConfig): Promise<AgentMesh> {
     const chain =
-      config.chain === 'anvil' ? foundry
-      : config.chain === 'polygon' ? polygon
-      : config.chain === 'amoy' ? polygonAmoy
-      : config.chain === 'base-sepolia' ? baseSepolia
-      : config.chain === 'arbitrum-sepolia' ? arbitrumSepolia
-      : config.chain === 'optimism-sepolia' ? optimismSepolia
-      : foundry;
+      config.chain === 'anvil'
+        ? foundry
+        : config.chain === 'polygon'
+          ? polygon
+          : config.chain === 'amoy'
+            ? polygonAmoy
+            : config.chain === 'base-sepolia'
+              ? baseSepolia
+              : config.chain === 'arbitrum-sepolia'
+                ? arbitrumSepolia
+                : config.chain === 'optimism-sepolia'
+                  ? optimismSepolia
+                  : foundry;
     const rpcUrl = config.rpcUrl ?? RPC_URLS[config.chain];
 
     const account = privateKeyToAccount(config.ownerKey);
