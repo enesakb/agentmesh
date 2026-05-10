@@ -22,6 +22,8 @@
     "deploy:multichain": "pwsh -File scripts/deploy-multichain.ps1",
     "bootstrap:genesis": "pwsh -File scripts/bootstrap-genesis.ps1",
     "verify:polygon": "pwsh -File scripts/verify-polygon.ps1",
+    "install:solana": "pwsh -File scripts/install-solana-toolchain.ps1",
+    "deploy:solana": "pwsh -File scripts/deploy-solana.ps1",
     "demo": "pwsh -File scripts/run-demo.ps1",
     "stress": "pwsh -File scripts/stress.ps1",
     "lint": "biome check .",
