@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-// Lightweight live block counter. Polls a public Polygon Amoy RPC every 8s.
-// Falls back gracefully if the RPC is unreachable — never errors visibly.
+// Lightweight live block counter. Polls Polygon mainnet (where AgentMesh
+// is deployed) every 8s. Falls back gracefully if the RPC is unreachable.
 export function BlockTicker() {
   const [block, setBlock] = useState<bigint | null>(null);
 
@@ -11,7 +11,7 @@ export function BlockTicker() {
     let alive = true;
     const tick = async () => {
       try {
-        const res = await fetch('https://rpc-amoy.polygon.technology', {
+        const res = await fetch('https://polygon-bor-rpc.publicnode.com', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify({ jsonrpc: '2.0', method: 'eth_blockNumber', params: [], id: 1 }),
@@ -33,14 +33,14 @@ export function BlockTicker() {
   if (block === null) {
     return (
       <span className="text-fg-dim">
-        <span className="text-fg-dim">⟁</span> amoy <span className="text-fg-dim">··</span>
+        <span className="text-fg-dim">⟁</span> polygon <span className="text-fg-dim">··</span>
       </span>
     );
   }
 
   return (
-    <span className="text-amber">
-      <span>⟁</span> amoy <span className="text-fg-muted">·</span>{' '}
+    <span className="text-phosphor">
+      <span>⟁</span> polygon <span className="text-fg-muted">·</span>{' '}
       <span className="text-fg tabular-nums">#{block.toString()}</span>
     </span>
   );
