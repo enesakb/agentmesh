@@ -7,10 +7,25 @@ versions follow [SemVer](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
 ### Added
+- **Live on Polygon mainnet (chain id 137).** Seven contracts deployed at
+  block 86,676,805. Addresses + tx hashes in
+  [`docs/mainnet.md`](docs/mainnet.md) and
+  [`deployments/polygon.json`](deployments/polygon.json).
+- `polygon` added to `SupportedChain` type in `@agentmesh/shared` and to
+  the `AgentMesh.create({ chain })` switch in `@agentmesh/sdk`.
+- Polygon, Base, Arbitrum, Optimism mainnet chain-name mappings in
+  `Deploy.s.sol`.
 
 ### Changed
+- `README.md` status banner: "live on Polygon mainnet" + address table.
+- `docs/integration-guide.md`: `chain: 'polygon'` is now the default
+  example (was `'amoy'`).
+- `apps/site/components/ChainBar.tsx`: Polygon shows as the first chain
+  with a green "live" dot, others remain "soon" / "code".
 
 ### Fixed
+- `.gitignore` now allows `deployments/polygon.json` so the SDK can load
+  mainnet addresses without a private file.
 
 ---
 

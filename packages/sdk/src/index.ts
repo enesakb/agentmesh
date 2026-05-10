@@ -49,7 +49,7 @@ import {
 import { type FetchWithPaymentOptions, fetchWithPayment } from '@agentmesh/x402-client';
 import pino from 'pino';
 import { privateKeyToAccount } from 'viem/accounts';
-import { baseSepolia, foundry, polygonAmoy } from 'viem/chains';
+import { arbitrumSepolia, baseSepolia, foundry, optimismSepolia, polygon, polygonAmoy } from 'viem/chains';
 
 const logger = pino({ name: 'agentmesh-sdk', level: process.env.LOG_LEVEL ?? 'info' });
 
@@ -90,7 +90,14 @@ export class AgentMesh {
   }
 
   static async create(config: AgentMeshConfig): Promise<AgentMesh> {
-    const chain = config.chain === 'anvil' ? foundry : config.chain === 'amoy' ? polygonAmoy : baseSepolia;
+    const chain =
+      config.chain === 'anvil' ? foundry
+      : config.chain === 'polygon' ? polygon
+      : config.chain === 'amoy' ? polygonAmoy
+      : config.chain === 'base-sepolia' ? baseSepolia
+      : config.chain === 'arbitrum-sepolia' ? arbitrumSepolia
+      : config.chain === 'optimism-sepolia' ? optimismSepolia
+      : foundry;
     const rpcUrl = config.rpcUrl ?? RPC_URLS[config.chain];
 
     const account = privateKeyToAccount(config.ownerKey);

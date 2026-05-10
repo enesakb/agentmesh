@@ -44,7 +44,7 @@ import { generatePrivateKey } from 'viem/accounts';
 const ownerKey = process.env.AGENT_OWNER_KEY ?? generatePrivateKey();
 
 const mesh = await AgentMesh.create({
-  chain: 'amoy',                            // or 'base-sepolia', 'arbitrum-sepolia', …
+  chain: 'polygon',                         // 'polygon' (live mainnet) | 'amoy' | 'base-sepolia' | …
   ownerKey: ownerKey as `0x${string}`,
   // optional:
   // rpcUrl: 'https://your-private-rpc',

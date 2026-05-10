@@ -18,6 +18,8 @@ tab_width = 4
 anvil = "${ANVIL_RPC}"
 amoy = "${POLYGON_AMOY_RPC}"
 base_sepolia = "${BASE_SEPOLIA_RPC}"
+polygon = "${POLYGON_RPC}"
 
 [etherscan]
 amoy = { key = "${POLYGONSCAN_API_KEY}", url = "https://api-amoy.polygonscan.com/api", chain = 80002 }
+polygon = { key = "${POLYGONSCAN_API_KEY}", url = "https://api.polygonscan.com/api", chain = 137 }

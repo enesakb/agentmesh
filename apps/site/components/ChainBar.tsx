@@ -7,6 +7,12 @@ const CHAINS: {
   explorer?: string;
 }[] = [
   {
+    name: 'Polygon',
+    shortName: 'polygon',
+    status: 'live',
+    explorer: 'https://polygonscan.com/address/0xec1D1998955D83e62058d2C2650f6CC73637C63a',
+  },
+  {
     name: 'Anvil',
     shortName: 'anvil',
     status: 'local',

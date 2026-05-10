@@ -99,6 +99,10 @@ contract Deploy is Script {
         if (chainId == 31337) return "anvil";
         if (chainId == 80002) return "amoy";
         if (chainId == 84532) return "base-sepolia";
+        if (chainId == 137) return "polygon";
+        if (chainId == 8453) return "base";
+        if (chainId == 42161) return "arbitrum";
+        if (chainId == 10) return "optimism";
         if (chainId == 1) return "mainnet";
         return string.concat("chain-", _toString(chainId));
     }

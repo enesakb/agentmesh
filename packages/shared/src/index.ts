@@ -7,6 +7,7 @@ export * from './abis/index.js';
 
 export type SupportedChain =
   | 'anvil'
+  | 'polygon'
   | 'amoy'
   | 'base-sepolia'
   | 'arbitrum-sepolia'
@@ -43,6 +44,14 @@ export const CHAINS: Record<SupportedChain, ChainMeta> = {
     chainId: 31337,
     rpcUrl: 'http://127.0.0.1:8545',
     status: 'local',
+  },
+  polygon: {
+    name: 'Polygon',
+    shortName: 'polygon',
+    chainId: 137,
+    rpcUrl: 'https://polygon-bor-rpc.publicnode.com',
+    explorerUrl: 'https://polygonscan.com',
+    status: 'live',
   },
   amoy: {
     name: 'Polygon Amoy',

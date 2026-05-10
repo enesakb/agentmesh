@@ -13,10 +13,11 @@ contracts/out/
 contracts/cache/
 contracts/broadcast/
 
-# Per-chain deployment outputs are local-only. Each developer regenerates
-# them via `pnpm run deploy:multichain`. Production addresses, when we have
-# any, will be documented in docs/deployments.md instead.
+# Per-chain deployment outputs default to local-only. Public reference
+# deployments (e.g. mainnet) are exempted below so the SDK can load
+# addresses from the repo.
 deployments/*.json
+!deployments/polygon.json
 
 # Secrets — never commit
 .env

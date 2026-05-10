@@ -4,9 +4,26 @@ Six-layer protocol stack for the autonomous AI agent economy. Identity,
 Wallet, Payment, Discovery, Marketplace, and Reputation — all on-chain,
 all composable.
 
-> **Status:** MVP (v0.1). Demo runs end-to-end against a local anvil node.
-> Polygon Amoy / Base Sepolia deploy scripts are provided. Not audited.
-> Do **not** deploy to mainnet.
+> **Status:** v0.1 — **live on Polygon mainnet** (block 86,676,805). Local
+> anvil flow runs end-to-end. Other chains have deploy scripts ready.
+> Contracts are **unaudited** — treat the live deployment as a public
+> reference, not a trustless production system. Use real funds at your
+> own risk.
+
+## Live on Polygon mainnet
+
+| Contract | Address |
+|---|---|
+| `ServiceMarketplace` | [`0xec1D1998955D83e62058d2C2650f6CC73637C63a`](https://polygonscan.com/address/0xec1D1998955D83e62058d2C2650f6CC73637C63a) |
+| `AgentRegistry` | [`0x5bdE393FD887CFca59EaFdfc2b8A1490142ec8a5`](https://polygonscan.com/address/0x5bdE393FD887CFca59EaFdfc2b8A1490142ec8a5) |
+| `ReputationRegistry` | [`0x24A8188FC9dFc5B959Aac1CF8cC3b0fF2287F723`](https://polygonscan.com/address/0x24A8188FC9dFc5B959Aac1CF8cC3b0fF2287F723) |
+| `AgentAccountFactory` | [`0x7f0029477D37E459A38D98d6dBb611ff88A61947`](https://polygonscan.com/address/0x7f0029477D37E459A38D98d6dBb611ff88A61947) |
+| `AgentAccount` (impl) | [`0xAdDCb6F4438BBf341D44a59744191b24FBD2703B`](https://polygonscan.com/address/0xAdDCb6F4438BBf341D44a59744191b24FBD2703B) |
+| `SpendingPolicyModule` | [`0x4b6E2A371B026FA1483e2faeaBAF826F9ee21B7F`](https://polygonscan.com/address/0x4b6E2A371B026FA1483e2faeaBAF826F9ee21B7F) |
+| `RecoveryModule` | [`0x70F9D229B37B88a986ffc7CA7381E08Ad47264cC`](https://polygonscan.com/address/0x70F9D229B37B88a986ffc7CA7381E08Ad47264cC) |
+
+Full deployment record incl. tx hashes:
+[`deployments/polygon.json`](deployments/polygon.json) · [`docs/mainnet.md`](docs/mainnet.md)
 
 ## The six layers
 
