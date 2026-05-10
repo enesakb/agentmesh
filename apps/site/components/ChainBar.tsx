@@ -31,8 +31,8 @@ const CHAINS: {
   {
     name: 'Solana Devnet',
     shortName: 'solana',
-    status: 'code-ready',
-    explorer: 'https://github.com/enesakb/agentmesh/tree/main/programs/agentmesh',
+    status: 'live',
+    explorer: 'https://explorer.solana.com/address/ArEiEEh22N3sDqRAM57GN6MQXFYUJtAMiWM8ZW5xj2gg?cluster=devnet',
   },
 ];
 

@@ -107,8 +107,9 @@ export const SOLANA_DEVNET = {
   shortName: 'solana-devnet',
   rpcUrl: 'https://api.devnet.solana.com',
   explorerUrl: 'https://explorer.solana.com/?cluster=devnet',
-  status: 'planned' as const,
-  programId: 'AGmEsHmEsH1111111111111111111111111111111111',
+  status: 'live' as const,
+  programId: 'ArEiEEh22N3sDqRAM57GN6MQXFYUJtAMiWM8ZW5xj2gg',
+  deployTx: '4omNe256cz8anUbyeKcJbM3Ms4S6mBpRPfEKinGdGKqio2C5ouDCWSyTsSVqNMW6csqqPd4uZFBDvn17TJbY3YXV',
 };
 
 // Back-compat exports

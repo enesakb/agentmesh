@@ -19,7 +19,7 @@
 
 use anchor_lang::prelude::*;
 
-declare_id!("AGmEsHmEsH1111111111111111111111111111111111");
+declare_id!("ArEiEEh22N3sDqRAM57GN6MQXFYUJtAMiWM8ZW5xj2gg");
 
 #[program]
 pub mod agentmesh {
@@ -166,7 +166,7 @@ fn bump_rep(rep: &mut Account<Reputation>, success: bool, value_lamports: u64) -
     } else {
         rep.failure_count = rep.failure_count.saturating_add(1);
     }
-    rep.total_volume_lamports = rep.total_volume_lamports.saturating_add(value_lamports);
+    rep.total_volume_lamports = rep.total_volume_lamports.saturating_add(value_lamports as u128);
     Ok(())
 }
 
